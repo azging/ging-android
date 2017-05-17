@@ -78,6 +78,40 @@ public class AppManager {
     }
 
     /**
+     * 指定的activity实例是否存活
+     *
+     * @param activity
+     * @return
+     */
+    public boolean activityInstanceIsLive(Activity activity) {
+        if (activityStack == null) {
+            Log.w("AppManager", "activityStack == null when activityInstanceIsLive");
+            return false;
+        }
+        return activityStack.contains(activity);
+    }
+
+    /**
+     * 指定的activity class是否存活(一个activity可能有多个实例)
+     *
+     * @param activityClass
+     * @return
+     */
+    public boolean activityClassIsLive(Class<?> activityClass) {
+        if (activityStack == null) {
+            Log.w("AppManager", "mActivityList == null when activityClassIsLive");
+            return false;
+        }
+        for (Activity activity : activityStack) {
+            if (activity.getClass().equals(activityClass)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * 结束所有Activity
      */
     public void finishAllActivity() {

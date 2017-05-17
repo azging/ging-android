@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.umeng.analytics.MobclickAgent;
+
 import butterknife.ButterKnife;
 
 /**
@@ -21,6 +23,8 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment {
     public static final String STATE_IS_HIDDEN = "state_is_hidden";
     public LayoutInflater inflater;
+
+    protected String mPageName = this.getClass().getName();
 
     public Context context;
 
@@ -74,5 +78,17 @@ public abstract class BaseFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(mPageName);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(mPageName);
     }
 }

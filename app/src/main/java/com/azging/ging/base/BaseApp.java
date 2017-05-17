@@ -1,15 +1,24 @@
 package com.azging.ging.base;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.Application;
+import android.app.PendingIntent;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.azging.ging.BuildConfig;
 import com.azging.ging.R;
 import com.azging.ging.bean.ActivityBean;
 import com.azging.ging.net.NetChangeObserver;
@@ -17,6 +26,8 @@ import com.azging.ging.net.NetWorkUtil;
 import com.azging.ging.net.NetworkStateReceiver;
 import com.azging.ging.utils.AppManager;
 import com.azging.ging.utils.Log;
+import com.azging.ging.view.MainActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -64,11 +75,23 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
     public void onCreate() {
         super.onCreate();
         app = this;
-//        ShareSDK.initSDK(this);
+
+        //init umeng config
+        if (BuildConfig.DEBUG) {
+            MobclickAgent.setDebugMode(true);
+            MobclickAgent.setCatchUncaughtExceptions(false);
+        } else {
+            MobclickAgent.setDebugMode(false);
+            MobclickAgent.setCatchUncaughtExceptions(true);
+        }
+        MobclickAgent.openActivityDurationTrack(false);
+//		MobclickAgent.updateOnlineConfig(this);
+
         Log.i("", "onCreate: ");
         initNetState();
 
         registerActivityLifecycleCallbacks(this);
+
     }
 
     private void initNetState() {
@@ -137,12 +160,14 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
 
     @Override
     public void onActivityResumed(Activity activity) {
-
+        MobclickAgent.onPageStart(activity.getClass().getName());
+        MobclickAgent.onResume(activity);
     }
 
     @Override
     public void onActivityPaused(Activity activity) {
-
+        MobclickAgent.onPageEnd(activity.getClass().getName());
+        MobclickAgent.onPause(activity);
     }
 
     @Override
@@ -157,8 +182,12 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        ActivityBean bean = activity.getIntent().getParcelableExtra("ActivityBean");
-        bean.getUnbinder().unbind();
-        AppManager.getAppManager().finishActivity();
+        if (activity instanceof IActivity) {
+            ActivityBean bean = activity.getIntent().getParcelableExtra("ActivityBean");
+            bean.getUnbinder().unbind();
+            AppManager.getAppManager().finishActivity();
+        }
     }
+
+
 }
