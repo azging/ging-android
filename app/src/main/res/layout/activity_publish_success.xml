@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.azging.ging.view.PublishSuccessActivity">
+
+    <include layout="@layout/header_title"/>
+
+    <LinearLayout
+        android:id="@+id/user_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header_view"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/user_avatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            tools:src="@mipmap/ic_launcher_round"/>
+
+        <TextView
+            android:id="@+id/user_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="宗硕"/>
+    </LinearLayout>
+
+    <View
+        style="@style/break_line_gray"
+        android:layout_below="@+id/user_info"
+        />
+
+    <LinearLayout
+        android:id="@+id/question_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_info"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/question_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            tools:text="北大有什么好的选修课"/>
+
+        <TextView
+            android:id="@+id/cost_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/orange"
+            android:textSize="13sp"
+            tools:text="二星红包"/>
+
+        <TextView
+            android:id="@+id/question_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            tools:text="北航大三学生一枚，想去北大听一些关于经济金融类的选修课，有没有推荐的课程、以及课程的开课时间和具体地点"/>
+
+
+    </LinearLayout>
+
+    <View
+        style="@style/break_line_gray"
+        android:layout_below="@+id/question_info"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/question_info"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="80dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="@color/gray"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/share_weixin"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="@color/gray"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/question_info"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="140dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/weixin_share"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/umeng_socialize_wechat"/>
+    </LinearLayout>
+</RelativeLayout>

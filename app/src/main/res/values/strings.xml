@@ -8,4 +8,37 @@
     <string name="operation_success">操作成功</string>
     <string name="network_error">似乎已断开与互联网的链接</string>
 
+    <string name="login">登录</string>
+    <string name="phone_num">手机号</string>
+    <string name="verify_code">验证码</string>
+    <string name="send_code">发送验证码</string>
+    <string name="prompt">未注册过的手机号将自动注册为知应用户</string>
+    <string name="agreement">注册表明您同意知应用户协议</string>
+    <string name="weixin_login_text">微信快速登录</string>
+    <string name="title_activity_login2">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="login_prompt">或者，您可以</string>
+    <string name="publish_title">我想问</string>
+    <string name="hint_publish_title">一句话概括想问的问题</string>
+    <string name="hint_publish_describe">说一说具体的问题信息，清楚明确的描述更容易获得答案</string>
+    <string name="describe">描述</string>
+    <string name="anonymity">匿名</string>
+    <string name="publish">发布</string>
+    <string name="share_weixin">分享到微信朋友圈</string>
+    <string name="logoff">退出</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * fragment 重叠问题
@@ -23,7 +24,7 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment extends Fragment {
     public static final String STATE_IS_HIDDEN = "state_is_hidden";
     public LayoutInflater inflater;
-
+    private Unbinder unbinder;
     protected String mPageName = this.getClass().getName();
 
     public Context context;
@@ -58,7 +59,7 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.inflater = inflater;
         View view = inflater.inflate(getLayoutId(), container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         init();
         return view;
     }
@@ -90,5 +91,11 @@ public abstract class BaseFragment extends Fragment {
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(mPageName);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
     }
 }

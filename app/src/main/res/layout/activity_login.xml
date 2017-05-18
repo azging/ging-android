@@ -1,0 +1,181 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.azging.ging.view.LoginActivity">
+
+    <include layout="@layout/header_title"/>
+
+    <LinearLayout
+        android:id="@+id/phone_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/phone_num"/>
+
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/ed_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:cursorVisible="true"
+            android:gravity="center_vertical"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:id="@+id/send_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send_code"
+            android:textColor="@color/indianred"
+            />
+    </LinearLayout>
+
+    <View
+        style="@style/break_line_gray"
+        android:layout_below="@+id/phone_view"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/password_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/phone_view"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/verify_code"/>
+
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/ed_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:cursorVisible="true"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp"
+            />
+    </LinearLayout>
+
+    <View
+        style="@style/break_line_gray"
+        android:layout_below="@+id/password_view"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        />
+
+    <TextView
+        android:id="@+id/prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password_view"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="7dp"
+        android:text="@string/prompt"
+        android:textSize="11sp"
+        />
+
+    <TextView
+        android:id="@+id/login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/password_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="63dp"
+        android:background="@color/orangered"
+        android:gravity="center"
+        android:text="@string/login"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_btn"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="1dp"
+            android:background="@color/darkgoldenrod"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_prompt"/>
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="1dp"
+            android:background="@color/darkgoldenrod"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/weixin_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="44dp"
+            android:layout_height="40dp"
+            android:src="@drawable/umeng_socialize_wechat"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/weixin_login_text"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/agreement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/weixin_login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="@string/agreement"
+        android:textSize="12sp"
+        />
+
+
+</RelativeLayout>

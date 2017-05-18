@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.azging.ging.view.PublishQuestionActivity">
+
+    <include layout="@layout/header_title"/>
+
+    <LinearLayout
+        android:id="@+id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/header_view"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/publish_title"
+            android:textColor="@color/black"/>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/ed_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:cursorVisible="true"
+            android:gravity="center_vertical"
+            android:hint="@string/hint_publish_title"
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
+            android:textCursorDrawable="@null"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <View
+        style="@style/break_line_gray"
+        android:layout_below="@+id/title_view"/>
+
+    <RelativeLayout
+        android:id="@+id/describe_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_view"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:id="@+id/publish_describe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/describe"/>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/ed_describe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_toRightOf="@+id/publish_describe"
+            android:cursorVisible="true"
+            android:gravity="left|top"
+            android:hint="@string/hint_publish_describe"
+            android:inputType="textMultiLine"
+            android:maxLength="280"
+            android:minLines="6"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
+            android:textCursorDrawable="@null"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/publish_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ed_describe"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/red"
+            tools:text="￥ 20"/>
+
+        <TextView
+            android:id="@+id/length_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/ed_describe"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="4dp"
+            tools:text="0/280"/>
+    </RelativeLayout>
+
+    <View
+        style="@style/break_line_gray"
+        android:layout_below="@+id/describe_view"
+        android:layout_marginTop="2dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/describe_view"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <View style="@style/break_line_gray"/>
+
+        <include layout="@layout/row_list_with_switch"/>
+
+        <View style="@style/break_line_gray"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/publish_btn"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:background="@color/orange"
+         android:layout_alignParentBottom="true"
+        android:text="@string/publish"/>
+</RelativeLayout>

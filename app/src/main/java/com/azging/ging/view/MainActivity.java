@@ -22,11 +22,6 @@ public class MainActivity extends AppCompatActivity implements IActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public int initView() {
         return R.layout.activity_main;
     }
@@ -39,12 +34,9 @@ public class MainActivity extends AppCompatActivity implements IActivity {
     void submit(View view) {
         switch (view.getId()) {
             case R.id.text:
-                Main2Activity.startActicity(AppManager.getAppManager().currentActivity());
                 break;
             case R.id.button:
-                ProgressDialogHelper progressDialogHelpe = ProgressDialogHelper.getInstance();
-                progressDialogHelpe.initProgressDialog(this);
-                progressDialogHelpe.showProgressDialog();
+                LoginActivity.startActivity(this);
                 break;
         }
     }
