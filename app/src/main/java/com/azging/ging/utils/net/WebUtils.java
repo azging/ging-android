@@ -8,6 +8,7 @@ import com.azging.ging.bean.GingResponse;
 import com.azging.ging.bean.UserBean;
 import com.azging.ging.utils.Log;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheMode;
 
 import java.io.File;
 import java.util.List;
@@ -22,10 +23,10 @@ import okhttp3.Response;
  * Created by GG on 2017/5/19.
  */
 
-public class WebUitls {
+public class WebUtils {
     private Context mContext;
 
-    public WebUitls(Context context) {
+    public WebUtils(Context context) {
         mContext = context;
     }
 
@@ -41,6 +42,7 @@ public class WebUitls {
         OkGo.post(WebUrls.getUrl(WebUrls.authcode_send))
                 .tag(mContext)
                 .cacheKey(key)
+                .cacheMode(CacheMode.NO_CACHE)
                 .params("Telephone", telephone)
                 .execute(callback);
     }
@@ -49,6 +51,7 @@ public class WebUitls {
         OkGo.post(WebUrls.getUrl(WebUrls.login_phone))
                 .tag(mContext)
                 .cacheKey(key)
+                .cacheMode(CacheMode.NO_CACHE)
                 .params("Telephone", telephone)
                 .params("AuthCode", authcode)
                 .execute(callback);
