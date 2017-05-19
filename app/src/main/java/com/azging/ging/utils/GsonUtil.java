@@ -6,9 +6,14 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 
+import java.io.Reader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -104,5 +109,34 @@ public class GsonUtil {
             }.getType());
         }
         return map;
+    }
+
+
+    public static <T> T fromJson(String json, Class<T> type) throws JsonIOException, JsonSyntaxException {
+        return gson.fromJson(json, type);
+    }
+
+    public static <T> T fromJson(String json, Type type) {
+        return gson.fromJson(json, type);
+    }
+
+    public static <T> T fromJson(JsonReader reader, Type typeOfT) throws JsonIOException, JsonSyntaxException {
+        return gson.fromJson(reader, typeOfT);
+    }
+
+    public static <T> T fromJson(Reader json, Class<T> classOfT) throws JsonSyntaxException, JsonIOException {
+        return gson.fromJson(json, classOfT);
+    }
+
+    public static <T> T fromJson(Reader json, Type typeOfT) throws JsonIOException, JsonSyntaxException {
+        return gson.fromJson(json, typeOfT);
+    }
+
+    public static String toJson(Object src) {
+        return gson.toJson(src);
+    }
+
+    public static String toJson(Object src, Type typeOfSrc) {
+        return gson.toJson(src, typeOfSrc);
     }
 }
