@@ -21,8 +21,15 @@ import com.azging.ging.utils.AppManager;
 import com.azging.ging.utils.Log;
 import com.azging.ging.utils.PrefConstants;
 import com.azging.ging.utils.SharedPreferencesHelper;
+import com.azging.ging.utils.ToastUtil;
 import com.azging.ging.utils.net.JsonCallBack;
 import com.azging.ging.utils.net.WebUtils;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -100,9 +107,50 @@ public class LoginActivity extends BaseMainActivity implements IActivity {
                 });
                 break;
             case R.id.weixin_login:
-
+                UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN, umAuthListener);
                 break;
         }
     }
 
+    private UMAuthListener umAuthListener = new UMAuthListener() {
+        @Override
+        public void onStart(SHARE_MEDIA share_media) {
+
+        }
+
+        @Override
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            ToastUtil.showLong("授权成功");
+            Log.printMap(data);
+            webUtils.wxLogin("WXLogin", data.get("uid"), data.get("name"), data.get("iconurl"), getGender(data.get("gender")), new JsonCallBack<GingResponse<UserBean>>() {
+                @Override
+                public void onSuccess(GingResponse<UserBean> userBeanGingResponse, Call call, Response response) {
+                    super.onSuccess(userBeanGingResponse, call, response);
+                    if (userBeanGingResponse.Data != null) {
+                        SharedPreferencesHelper.getInstance(AppManager.getAppManager().currentActivity())
+                                .putStringValue(PrefConstants.KEY_CURRENT_USER, userBeanGingResponse.Data.toString());
+                        Log.printJSON("user su", userBeanGingResponse.Data.toString());
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            ToastUtil.showLong("授权失败");
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+            ToastUtil.showLong("取消授权");
+        }
+    };
+
+    public int getGender(String gender) {
+        if ("男".equals(gender))
+            return 1;
+        else if ("女".equals(gender))
+            return 2;
+        return 0;
+    }
 }

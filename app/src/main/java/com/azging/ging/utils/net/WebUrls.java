@@ -17,4 +17,6 @@ public class WebUrls {
 
     //使用手机号登录或注册
     static String login_phone = "/api/v1/user/login/phone/";
+
+    static String login_wx="/api/v1/user/login/wechat/";
 }

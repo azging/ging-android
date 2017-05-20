@@ -2,6 +2,7 @@ package com.azging.ging.view;
 
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 
 import com.azging.ging.R;
@@ -45,7 +46,10 @@ public class MainActivity extends BaseMainActivity implements IActivity {
 
                 break;
             case R.id.button:
-
+//                new ShareAction(MainActivity.this).setPlatform(SHARE_MEDIA.QQ)
+//                        .withText("hello")
+//                        .setCallback(umShareListener)
+//                        .share();
                 break;
         }
     }

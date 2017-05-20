@@ -23,11 +23,17 @@ import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.store.PersistentCookieStore;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.analytics.social.UMPlatformData;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.handler.WeixinPreferences;
+import com.umeng.socialize.media.WeiXinShareContent;
 
 import java.util.logging.Level;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import okhttp3.internal.platform.Platform;
 
 
 /**
@@ -84,11 +90,16 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
         MobclickAgent.openActivityDurationTrack(false);
 //		MobclickAgent.updateOnlineConfig(this);
 
+        UMShareAPI.get(this);
         Log.i("", "onCreate: ");
         initNetState();
         initOkGo();
         registerActivityLifecycleCallbacks(this);
 
+    }
+
+    {
+        PlatformConfig.setWeixin("", "");
     }
 
     private void initOkGo() {

@@ -30,13 +30,13 @@ public class WebUtils {
         mContext = context;
     }
 
-//    public void sentAuthcode(String key, String telephone, StringCallback callback) {
-//        OkGo.post(WebUrls.getUrl(WebUrls.authcode_send))
-//                .tag(mContext)
-//                .cacheKey(key)
-//                .params("Telephone", telephone)
-//                .execute(callback);
-//    }
+    /**
+     * 发送验证码
+     *
+     * @param key
+     * @param telephone
+     * @param callback
+     */
 
     public void sentAuthcode(String key, String telephone, JsonCallBack<GingResponse<AuthCodeBean>> callback) {
         OkGo.post(WebUrls.getUrl(WebUrls.authcode_send))
@@ -46,6 +46,15 @@ public class WebUtils {
                 .params("Telephone", telephone)
                 .execute(callback);
     }
+
+    /**
+     * 手机号 验证码登录
+     *
+     * @param key
+     * @param telephone
+     * @param authcode
+     * @param callback
+     */
 
     public void phoneLogin(String key, String telephone, String authcode, JsonCallBack<GingResponse<UserBean>> callback) {
         OkGo.post(WebUrls.getUrl(WebUrls.login_phone))
@@ -57,10 +66,40 @@ public class WebUtils {
                 .execute(callback);
     }
 
+    /**
+     * 微信登录
+     *
+     * @param key
+     * @param wechatId  微信id
+     * @param nick      微信昵称
+     * @param avatarUrl 微信头像的url
+     * @param gender    性别
+     * @param callBack
+     */
+
+    public void wxLogin(String key, String wechatId, String nick, String avatarUrl, int gender, JsonCallBack<GingResponse<UserBean>> callBack) {
+        OkGo.post(WebUrls.getUrl(WebUrls.login_wx))
+                .tag(mContext)
+                .cacheKey(key)
+                .cacheMode(CacheMode.NO_CACHE)
+                .params("WechatId", wechatId)
+                .params("Nick", nick)
+                .params("AvatarUrl", avatarUrl)
+                .params("Gender", gender)
+                .execute(callBack);
+    }
 
 
+    /**
+     * 打印成功请求信息
+     *
+     * @param data
+     * @param call
+     * @param response
+     * @param <T>
+     */
 
-    public  <T> void handleResponse(T data, Call call, Response response) {
+    public <T> void handleResponse(T data, Call call, Response response) {
         StringBuilder sb;
         if (call != null) {
             Log.e("请求成功  请求方式：" + call.request().method() + "\n" + "url：" + call.request().url());
@@ -120,6 +159,13 @@ public class WebUtils {
             Log.e(sb.toString());
         }
     }
+
+    /**
+     * 打印错误请求信息
+     *
+     * @param call
+     * @param response
+     */
 
     public void handleError(Call call, Response response) {
         StringBuilder sb;
