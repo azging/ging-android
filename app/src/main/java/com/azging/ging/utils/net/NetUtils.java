@@ -1,4 +1,4 @@
-package com.azging.ging.utils;
+package com.azging.ging.utils.net;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

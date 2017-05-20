@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import java.lang.reflect.Field;
+import java.util.UUID;
 
 /**
  * get any infomation about phone from this class
@@ -175,5 +176,22 @@ public class PhoneUtil {
 				Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
 			}
 		});
+	}
+
+
+	public static String getDeviceUUID(Context context) {
+		final TelephonyManager tm = (TelephonyManager) context.getSystemService(Context
+				.TELEPHONY_SERVICE);
+
+		final String tmDevice, tmSerial, androidId;
+		tmDevice = "" + tm.getDeviceId();
+		tmSerial = "" + tm.getSimSerialNumber();
+		androidId = "" + android.provider.Settings.Secure.getString(context.getContentResolver(),
+				android.provider.Settings.Secure.ANDROID_ID);
+
+		UUID deviceUuid = new UUID(androidId.hashCode(), ((long) tmDevice.hashCode() << 32) |
+				tmSerial.hashCode());
+		String uniqueId = deviceUuid.toString();
+		return uniqueId;
 	}
 }

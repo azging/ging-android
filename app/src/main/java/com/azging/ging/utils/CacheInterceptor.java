@@ -2,6 +2,8 @@ package com.azging.ging.utils;
 
 import android.content.Context;
 
+import com.azging.ging.utils.net.NetUtils;
+
 import java.io.IOException;
 
 import okhttp3.CacheControl;

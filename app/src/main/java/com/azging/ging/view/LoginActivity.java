@@ -90,6 +90,7 @@ public class LoginActivity extends BaseMainActivity implements IActivity {
                     @Override
                     public void onSuccess(GingResponse<AuthCodeBean> authCodeBeanGingResponse, Call call, Response response) {
                         super.onSuccess(authCodeBeanGingResponse, call, response);
+                        ToastUtil.showShort("发送成功");
                     }
                 });
                 break;
@@ -98,6 +99,7 @@ public class LoginActivity extends BaseMainActivity implements IActivity {
                     @Override
                     public void onSuccess(GingResponse<UserBean> userBeanGingResponse, Call call, Response response) {
                         super.onSuccess(userBeanGingResponse, call, response);
+                        ToastUtil.showShort("登录成功");
                         if (userBeanGingResponse.Data != null) {
                             SharedPreferencesHelper.getInstance(AppManager.getAppManager().currentActivity())
                                     .putStringValue(PrefConstants.KEY_CURRENT_USER, userBeanGingResponse.Data.toString());

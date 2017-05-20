@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 
 import com.azging.ging.bean.AuthCodeBean;
 import com.azging.ging.bean.GingResponse;
+import com.azging.ging.bean.QuestionWrapper;
 import com.azging.ging.bean.UserBean;
 import com.azging.ging.utils.Log;
 import com.lzy.okgo.OkGo;
@@ -92,6 +93,18 @@ public class WebUtils {
                 .params("Nick", nick)
                 .params("AvatarUrl", avatarUrl)
                 .params("Gender", gender)
+                .execute(callBack);
+    }
+
+    public void publishQuestion(String key, String Title, String Description, String PhotoUrls, float Reward, int IsAnonymous, JsonCallBack<GingResponse<QuestionWrapper>> callBack) {
+        OkGo.post(WebUrls.getUrl(WebUrls.publish_question))
+                .tag(mContext)
+                .cacheKey(key)
+                .params("Title", Title)
+                .params("Description", Description)
+                .params("PhotoUrls", PhotoUrls)
+                .params("Reward", Reward)
+                .params("IsAnonymous", IsAnonymous)
                 .execute(callBack);
     }
 

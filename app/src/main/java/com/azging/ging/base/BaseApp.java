@@ -2,6 +2,8 @@ package com.azging.ging.base;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +12,16 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.azging.ging.BuildConfig;
 import com.azging.ging.R;
 import com.azging.ging.bean.ActivityBean;
+import com.azging.ging.utils.PhoneUtil;
+import com.azging.ging.utils.PrefConstants;
+import com.azging.ging.utils.SharedPreferencesHelper;
 import com.azging.ging.utils.net.NetChangeObserver;
 import com.azging.ging.utils.net.NetWorkUtil;
 import com.azging.ging.utils.net.NetworkStateReceiver;
@@ -22,18 +31,15 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.store.PersistentCookieStore;
+import com.lzy.okgo.model.HttpHeaders;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.analytics.social.UMPlatformData;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.handler.WeixinPreferences;
-import com.umeng.socialize.media.WeiXinShareContent;
 
 import java.util.logging.Level;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import okhttp3.internal.platform.Platform;
 
 
 /**
@@ -47,7 +53,53 @@ import okhttp3.internal.platform.Platform;
  */
 
 public class BaseApp extends Application implements Application.ActivityLifecycleCallbacks {
+
+    private static final String KEY_PREF_LOCATION_SUBMIT = "location_time_tag";
+
+
     public static BaseApp app;
+    public static AMapLocation currentLocation;
+
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+    //声明AMapLocationClientOption对象
+    public AMapLocationClientOption mLocationOption = null;
+    //声明定位回调监听器
+    public AMapLocationListener mLocationListener = new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation aMapLocation) {
+            if (aMapLocation != null) {
+                if (aMapLocation.getErrorCode() == 0) {
+                    currentLocation = aMapLocation;
+                    Log.e("Lat====" + currentLocation.getLatitude() + "-------    Lon====" + currentLocation.getLongitude());
+
+                    long lastSubmit = SharedPreferencesHelper.getInstance(getApplicationContext()).getLongValue(KEY_PREF_LOCATION_SUBMIT);
+                    if (System.currentTimeMillis() - lastSubmit > PrefConstants.LOCATION_SUBMIT_INTERVAL) {
+//                        if (TextUtils.isEmpty(clientId)) { //clientId is not ready
+//                            return;
+//                        }
+                        Log.e("app set user config");
+//                        webApp.setUserConfig(clientId, new WebResultCallback() {
+//                            @Override
+//                            public void resultGot(int rescode, JSONObject dataObj, String msg) throws JSONException {
+                        SharedPreferencesHelper.getInstance(getApplicationContext()).putLongValue(KEY_PREF_LOCATION_SUBMIT, System.currentTimeMillis());
+//                                if (rescode == 0) {
+//                                    LocalBroadcastHelper.notifyWebLocNameUpdated(localBroadcastManager, dataObj.toString());
+//                                }
+//                            }
+//                        });
+                    }
+//可在其中解析amapLocation获取相应内容。
+                } else {
+                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                    Log.e("AmapError", "location Error, ErrCode:"
+                            + aMapLocation.getErrorCode() + ", errInfo:"
+                            + aMapLocation.getErrorInfo());
+                }
+            }
+        }
+    };
+
 
     private NetChangeObserver observer = new NetChangeObserver() {
 
@@ -91,11 +143,50 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
 //		MobclickAgent.updateOnlineConfig(this);
 
         UMShareAPI.get(this);
+
         Log.i("", "onCreate: ");
+        initLocation();
+
         initNetState();
+
         initOkGo();
+
         registerActivityLifecycleCallbacks(this);
 
+        getCookie();
+
+    }
+
+    private String getCookie() {
+        StringBuilder cookie = new StringBuilder();
+        cookie.append("DeviceUUID=").append(PhoneUtil.getDeviceUUID(this)).append("; ").append("DeviceType=2; ");
+        PackageManager pm = getPackageManager();
+        try {
+            PackageInfo pi = pm.getPackageInfo(getPackageName(), 0);
+            cookie.append("AppVer=").append(pi.versionName).append("; ");
+//            appName = pi.applicationInfo.loadLabel(getPackageManager()).toString();
+//            appChannel = pm.getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA)
+//                    .metaData.get("UMENG_CHANNEL").toString();
+//            userAgent = "Android" + ";" + appChannel + ";" + android.os.Build.MODEL + ";" +
+//                    android.os.Build.VERSION.SDK_INT
+//                    + ";" + android.os.Build.VERSION.RELEASE + ";" + appVer + ";" + deviceUUID;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+//        cookie = cookie + "CityId=";
+//        if (DuckrApp.getInstance().getCurrentCity() != null) {
+//            cookie = cookie + DuckrApp.getInstance().getCurrentCity().getCityId();
+//        } else {
+//            cookie = cookie + "110000";
+//        }
+
+        if (currentLocation != null) {
+            cookie.append("LocLng=").append(currentLocation.getLongitude()).append("; ").append("LocLat=").append(currentLocation.getLatitude()).append(";");
+        }
+
+
+        return cookie.toString();
     }
 
     {
@@ -103,6 +194,11 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
     }
 
     private void initOkGo() {
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.put("Cookie", getCookie());
+
+
         //必须调用初始化
         OkGo.init(this);
 
@@ -135,16 +231,16 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
                     .setCookieStore(new PersistentCookieStore())        //cookie持久化存储，如果cookie不过期，则一直有效
 
                     //可以设置https的证书,以下几种方案根据需要自己设置
-                    .setCertificates();                              //方法一：信任所有证书,不安全有风险
+                    .setCertificates()                              //方法一：信任所有证书,不安全有风险
 //              .setCertificates(new SafeTrustManager())            //方法二：自定义信任规则，校验服务端证书
 //              .setCertificates(getAssets().open("srca.cer"))      //方法三：使用预埋证书，校验服务端证书（自签名证书）
 //              //方法四：使用bks证书和密码管理客户端证书（双向认证），使用预埋证书，校验服务端证书（自签名证书）
 //               .setCertificates(getAssets().open("xxx.bks"), "123456", getAssets().open("yyy.cer"))//
 
-            //配置https的域名匹配规则，详细看demo的初始化介绍，不需要就不要加入，使用不当会导致https握手失败
+                    //配置https的域名匹配规则，详细看demo的初始化介绍，不需要就不要加入，使用不当会导致https握手失败
 //               .setHostnameVerifier(new SafeHostnameVerifier())
 
-            //可以添加全局拦截器，不需要就不要加入，错误写法直接导致任何回调不执行
+                    //可以添加全局拦截器，不需要就不要加入，错误写法直接导致任何回调不执行
 //                .addInterceptor(new Interceptor() {
 //                    @Override
 //                    public Response intercept(Chain chain) throws IOException {
@@ -152,8 +248,8 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
 //                    }
 //                })
 
-            //这两行同上，不需要就不要加入
-//                    .addCommonHeaders(headers)  //设置全局公共头
+                    //这两行同上，不需要就不要加入
+                    .addCommonHeaders(headers); //设置全局公共头
 //                    .addCommonParams(params);   //设置全局公共参数
 
         } catch (Exception e) {
@@ -168,6 +264,38 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
         //注册网络变化的观察者
         NetworkStateReceiver.registerObserver(observer);
     }
+
+
+    /**
+     * 获取Location通过LocationManger获取！
+     */
+    public void initLocation() {
+
+        //初始化定位
+        mLocationClient = new AMapLocationClient(getApplicationContext());
+        //设置定位回调监听
+        mLocationClient.setLocationListener(mLocationListener);
+
+
+        //初始化AMapLocationClientOption对象
+        mLocationOption = new AMapLocationClientOption();
+
+        //获取一次定位结果：
+        //该方法默认为false。
+        mLocationOption.setOnceLocation(true);
+
+        //获取最近3s内精度最高的一次定位结果：
+        //设置setOnceLocationLatest(boolean b)接口为true，启动定位时SDK会返回最近3s内精度最高的一次定位结果。如果设置其为true，setOnceLocation(boolean b)接口也会被设置为true，反之不会，默认为false。
+        mLocationOption.setOnceLocationLatest(true);
+
+        //关闭缓存机制
+        mLocationOption.setLocationCacheEnable(false);
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+        //启动定位
+        mLocationClient.startLocation();
+    }
+
 
     /**
      * 程序结束的位置 注销监听
