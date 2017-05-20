@@ -30,6 +30,12 @@ public class WebUtils {
         mContext = context;
     }
 
+
+    public void setConfig() {
+
+    }
+
+
     /**
      * 发送验证码
      *
