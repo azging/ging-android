@@ -1,4 +1,4 @@
-package com.azging.ging.utils.net;
+package com.azging.ging.net;
 
 import com.azging.ging.bean.GingResponse;
 import com.azging.ging.bean.SimpleResponse;

@@ -2,7 +2,7 @@ package com.azging.ging.utils;
 
 import android.content.Context;
 
-import com.azging.ging.utils.net.NetUtils;
+import com.azging.ging.net.NetUtils;
 
 import java.io.IOException;
 

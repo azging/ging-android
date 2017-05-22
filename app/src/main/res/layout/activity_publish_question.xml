@@ -14,9 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/header_view"
-        android:layout_marginLeft="10dp"
+        android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -49,14 +50,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title_view"
-        android:layout_marginLeft="10dp">
+        android:background="@color/white"
+        android:paddingLeft="10dp">
 
         <TextView
             android:id="@+id/publish_describe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/describe"/>
+            android:text="@string/describe"
+            android:textColor="@color/black"/>
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/ed_describe"
@@ -76,14 +79,36 @@
             android:textCursorDrawable="@null"
             android:textSize="12sp"/>
 
-        <TextView
-            android:id="@+id/publish_cost"
+
+        <LinearLayout
+            android:id="@+id/add_img_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ed_describe"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/red"
-            tools:text="￥ 20"/>
+            android:layout_below="@id/ed_describe"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/add_img1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:src="@mipmap/ic_launcher_round"/>
+
+            <ImageView
+                android:id="@+id/add_img2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                tools:src="@mipmap/ic_launcher_round"/>
+
+            <ImageView
+                android:id="@+id/add_img3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                tools:src="@mipmap/ic_launcher_round"/>
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/length_limit"
@@ -92,7 +117,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/ed_describe"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="30dp"
             tools:text="0/280"/>
     </RelativeLayout>
 
@@ -108,9 +133,16 @@
         android:layout_marginTop="10dp"
         android:orientation="vertical">
 
+
+        <include
+            android:id="@+id/reward_view"
+            layout="@layout/row_list_accessible"/>
+
         <View style="@style/break_line_gray"/>
 
-        <include layout="@layout/row_list_with_switch"/>
+        <include
+            android:id="@+id/anonymous_view"
+            layout="@layout/row_list_with_switch"/>
 
         <View style="@style/break_line_gray"/>
     </LinearLayout>
@@ -119,8 +151,8 @@
         android:id="@+id/publish_btn"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:gravity="center"
+        android:layout_alignParentBottom="true"
         android:background="@color/orange"
-         android:layout_alignParentBottom="true"
+        android:gravity="center"
         android:text="@string/publish"/>
 </RelativeLayout>

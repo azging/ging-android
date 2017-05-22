@@ -1,5 +1,6 @@
 package com.azging.ging.base;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
 import android.content.pm.PackageInfo;
@@ -19,12 +20,15 @@ import com.amap.api.location.AMapLocationListener;
 import com.azging.ging.BuildConfig;
 import com.azging.ging.R;
 import com.azging.ging.bean.ActivityBean;
+import com.azging.ging.net.JsonCallBack;
+import com.azging.ging.net.WebUtils;
+import com.azging.ging.utils.PermissionsChecker;
 import com.azging.ging.utils.PhoneUtil;
 import com.azging.ging.utils.PrefConstants;
 import com.azging.ging.utils.SharedPreferencesHelper;
-import com.azging.ging.utils.net.NetChangeObserver;
-import com.azging.ging.utils.net.NetWorkUtil;
-import com.azging.ging.utils.net.NetworkStateReceiver;
+import com.azging.ging.net.NetChangeObserver;
+import com.azging.ging.net.NetWorkUtil;
+import com.azging.ging.net.NetworkStateReceiver;
 import com.azging.ging.utils.AppManager;
 import com.azging.ging.utils.Log;
 import com.lzy.okgo.OkGo;
@@ -40,6 +44,8 @@ import java.util.logging.Level;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import okhttp3.Call;
+import okhttp3.Response;
 
 
 /**
@@ -131,6 +137,7 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
         super.onCreate();
         app = this;
 
+
         //init umeng config
         if (BuildConfig.DEBUG) {
             MobclickAgent.setDebugMode(true);
@@ -153,51 +160,22 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
 
         registerActivityLifecycleCallbacks(this);
 
-        getCookie();
+        new WebUtils(app).setConfig(new JsonCallBack() {
+            @Override
+            public void onSuccess(Object o, Call call, Response response) {
+                super.onSuccess(o, call, response);
 
+            }
+        });
     }
 
-    private String getCookie() {
-        StringBuilder cookie = new StringBuilder();
-        cookie.append("DeviceUUID=").append(PhoneUtil.getDeviceUUID(this)).append("; ").append("DeviceType=2; ");
-        PackageManager pm = getPackageManager();
-        try {
-            PackageInfo pi = pm.getPackageInfo(getPackageName(), 0);
-            cookie.append("AppVer=").append(pi.versionName).append("; ");
-//            appName = pi.applicationInfo.loadLabel(getPackageManager()).toString();
-//            appChannel = pm.getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA)
-//                    .metaData.get("UMENG_CHANNEL").toString();
-//            userAgent = "Android" + ";" + appChannel + ";" + android.os.Build.MODEL + ";" +
-//                    android.os.Build.VERSION.SDK_INT
-//                    + ";" + android.os.Build.VERSION.RELEASE + ";" + appVer + ";" + deviceUUID;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
-//        cookie = cookie + "CityId=";
-//        if (DuckrApp.getInstance().getCurrentCity() != null) {
-//            cookie = cookie + DuckrApp.getInstance().getCurrentCity().getCityId();
-//        } else {
-//            cookie = cookie + "110000";
-//        }
-
-        if (currentLocation != null) {
-            cookie.append("LocLng=").append(currentLocation.getLongitude()).append("; ").append("LocLat=").append(currentLocation.getLatitude()).append(";");
-        }
-
-
-        return cookie.toString();
-    }
 
     {
         PlatformConfig.setWeixin("", "");
     }
 
+
     private void initOkGo() {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.put("Cookie", getCookie());
-
 
         //必须调用初始化
         OkGo.init(this);
@@ -231,16 +209,16 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
                     .setCookieStore(new PersistentCookieStore())        //cookie持久化存储，如果cookie不过期，则一直有效
 
                     //可以设置https的证书,以下几种方案根据需要自己设置
-                    .setCertificates()                              //方法一：信任所有证书,不安全有风险
+                    .setCertificates();                             //方法一：信任所有证书,不安全有风险
 //              .setCertificates(new SafeTrustManager())            //方法二：自定义信任规则，校验服务端证书
 //              .setCertificates(getAssets().open("srca.cer"))      //方法三：使用预埋证书，校验服务端证书（自签名证书）
 //              //方法四：使用bks证书和密码管理客户端证书（双向认证），使用预埋证书，校验服务端证书（自签名证书）
 //               .setCertificates(getAssets().open("xxx.bks"), "123456", getAssets().open("yyy.cer"))//
 
-                    //配置https的域名匹配规则，详细看demo的初始化介绍，不需要就不要加入，使用不当会导致https握手失败
+            //配置https的域名匹配规则，详细看demo的初始化介绍，不需要就不要加入，使用不当会导致https握手失败
 //               .setHostnameVerifier(new SafeHostnameVerifier())
 
-                    //可以添加全局拦截器，不需要就不要加入，错误写法直接导致任何回调不执行
+            //可以添加全局拦截器，不需要就不要加入，错误写法直接导致任何回调不执行
 //                .addInterceptor(new Interceptor() {
 //                    @Override
 //                    public Response intercept(Chain chain) throws IOException {
@@ -248,8 +226,8 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
 //                    }
 //                })
 
-                    //这两行同上，不需要就不要加入
-                    .addCommonHeaders(headers); //设置全局公共头
+            //这两行同上，不需要就不要加入
+//                    .addCommonHeaders(headers); //设置全局公共头
 //                    .addCommonParams(params);   //设置全局公共参数
 
         } catch (Exception e) {

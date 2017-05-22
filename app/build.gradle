@@ -22,7 +22,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     compile 'com.lzy.net:okgo:+'
-//    compile 'com.umeng.analytics:analytics:latest.integration'
+    //    compile 'com.umeng.analytics:analytics:latest.integration'
 }
 
 android {
@@ -38,6 +38,7 @@ android {
         debug {
             v1SigningEnabled true
             v2SigningEnabled true
+            storeFile file('/Users/GG/.android/debug.keystore')
         }
     }
     compileSdkVersion 25

@@ -1,4 +1,4 @@
-package com.azging.ging.utils.net;
+package com.azging.ging.net;
 
 /**
  * Created by GG on 2017/5/19.
@@ -11,6 +11,9 @@ public class WebUrls {
     static String getUrl(String s) {
         return baseUrl + s;
     }
+
+    //设置应用初始化数据
+    static String set_config = "/api/v1/app/config/set/";
 
     //获取验证码
     static String authcode_send = "/api/v1/user/phone/authcode/send/";

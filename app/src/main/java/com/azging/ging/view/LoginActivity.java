@@ -2,8 +2,6 @@ package com.azging.ging.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,17 +20,15 @@ import com.azging.ging.utils.Log;
 import com.azging.ging.utils.PrefConstants;
 import com.azging.ging.utils.SharedPreferencesHelper;
 import com.azging.ging.utils.ToastUtil;
-import com.azging.ging.utils.net.JsonCallBack;
-import com.azging.ging.utils.net.WebUtils;
+import com.azging.ging.net.JsonCallBack;
+import com.azging.ging.net.WebUtils;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
@@ -127,7 +123,6 @@ public class LoginActivity extends BaseMainActivity implements IActivity {
             webUtils.wxLogin("WXLogin", data.get("uid"), data.get("name"), data.get("iconurl"), getGender(data.get("gender")), new JsonCallBack<GingResponse<UserBean>>() {
                 @Override
                 public void onSuccess(GingResponse<UserBean> userBeanGingResponse, Call call, Response response) {
-                    super.onSuccess(userBeanGingResponse, call, response);
                     if (userBeanGingResponse.Data != null) {
                         SharedPreferencesHelper.getInstance(AppManager.getAppManager().currentActivity())
                                 .putStringValue(PrefConstants.KEY_CURRENT_USER, userBeanGingResponse.Data.toString());

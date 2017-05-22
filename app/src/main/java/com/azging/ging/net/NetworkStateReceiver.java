@@ -1,4 +1,4 @@
-package com.azging.ging.utils.net;
+package com.azging.ging.net;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
