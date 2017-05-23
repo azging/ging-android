@@ -8,13 +8,29 @@
 
     <include layout="@layout/header_title"/>
 
-    <RelativeLayout
+
+
+    <LinearLayout
+        android:layout_below="@+id/header_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/header_view">
+        android:orientation="vertical">
 
-        <include layout="@layout/rv_list"/>
-    </RelativeLayout>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/main_tab"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:minHeight="30dp"
+            app:tabIndicatorHeight="2dp"
+            app:tabMode="fixed"
+            />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/main_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
 
 
 </RelativeLayout>

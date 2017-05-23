@@ -54,4 +54,11 @@
     <string name="cancel">取消</string>
 
     <string name="ask">要允许知应电话权限吗？</string>
+    <string name="answer_question_btn">立即回答</string>
+
+    <string name="my_question">我的提问</string>
+    <string name="my_answer">我的回答</string>
+    <string name="my_wallet">我的红包</string>
+    <string name="feedback">意见反馈</string>
+    <string name="about_us">关于我们</string>
 </resources>

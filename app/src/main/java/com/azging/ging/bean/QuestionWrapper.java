@@ -35,5 +35,6 @@ public class QuestionWrapper extends BaseBean {
     public void setCreateUserWrapper(com.azging.ging.bean.CreateUserWrapper createUserWrapper) {
         CreateUserWrapper = createUserWrapper;
     }
+
 }
 

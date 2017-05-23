@@ -5,12 +5,14 @@ import android.net.Uri;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
 
 public class ImageLoader {
     public static final String ANDROID_RESOURCE = "android.resource://";
     public static final String FOREWARD_SLASH = "/";
+
     private static class ImageLoaderHolder {
         private static final ImageLoader INSTANCE = new ImageLoader();
     }
@@ -29,8 +31,11 @@ public class ImageLoader {
                 .load(url)
 //                .placeholder(R.drawable.logo_liwushuo_grey)
 //                .error(R.drawable.logo_liwushuo_grey)
-                .centerCrop()
-                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .dontAnimate()
+                .thumbnail(0.1f)
+//                .centerCrop()
+//                .crossFade()
                 .into(imageView);
     }
 
@@ -97,7 +102,7 @@ public class ImageLoader {
 
     //加载SD卡图片显示为圆形图片
     public void displayCricleImage(Context context, File file, ImageView imageView) {
-        Glide .with(context)
+        Glide.with(context)
                 .load(file)
                 //.centerCrop()
                 .transform(new GlideCircleTransform(context))

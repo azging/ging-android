@@ -28,7 +28,10 @@ public class WebUrls {
     static String publish_question = "/api/v1/question/publish/";
 
     //根据quid获取问题   GET
-    static String question_detail = "/api/v1/question/detail/{quid}";
+    static String question_detail = "/api/v1/question/detail/";
+
+    //根据quid获取回答列表
+    static String answer_list = "/api/v1/question/answer/list/";
 
     //最新问题列表
     static String new_question_list = "/api/v1/question/list/new/";
@@ -38,4 +41,7 @@ public class WebUrls {
 
     //附近问题列表
     static String nearby_question_list = "/api/v1/question/list/nearby/";
+
+    //用户退出登录
+    static String logout = "/api/v1/user/logout/";
 }

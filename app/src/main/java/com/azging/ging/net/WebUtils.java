@@ -2,6 +2,8 @@ package com.azging.ging.net;
 
 import android.content.Context;
 
+import com.azging.ging.bean.AnswerWrapper;
+import com.azging.ging.bean.AnswerWrapperListBean;
 import com.azging.ging.bean.AuthCodeBean;
 import com.azging.ging.bean.GingResponse;
 import com.azging.ging.bean.QuestionWrapper;
@@ -113,13 +115,98 @@ public class WebUtils extends WebBase {
                 .execute(callBack);
     }
 
+    /**
+     * 获取最新问题列表
+     *
+     * @param key
+     * @param orderStr
+     * @param callBack
+     */
+
     public void newQuestionList(String key, String orderStr, JsonCallBack<GingResponse<QuestionWrapperListBean>> callBack) {
         OkGo.post(WebUrls.getUrl(WebUrls.new_question_list))
                 .tag(mContext)
                 .cacheKey(key)
-                .params("OrderStr",orderStr)
+                .params("OrderStr", orderStr)
                 .execute(callBack);
     }
 
+    /**
+     * 获取热门问题列表
+     *
+     * @param key
+     * @param orderStr
+     * @param callBack
+     */
+
+    public void hotQuestionList(String key, String orderStr, JsonCallBack<GingResponse<QuestionWrapperListBean>> callBack) {
+        OkGo.post(WebUrls.getUrl(WebUrls.hot_question_list))
+                .tag(mContext)
+                .cacheKey(key)
+                .params("OrderStr", orderStr)
+                .execute(callBack);
+    }
+
+    /**
+     * 获取附近问题列表
+     *
+     * @param key
+     * @param orderStr
+     * @param callBack
+     */
+
+    public void nearbyQuestionList(String key, String orderStr, JsonCallBack<GingResponse<QuestionWrapperListBean>> callBack) {
+        OkGo.post(WebUrls.getUrl(WebUrls.hot_question_list))
+                .tag(mContext)
+                .cacheKey(key)
+                .params("OrderStr", orderStr)
+                .execute(callBack);
+    }
+
+    /**
+     * 根据quid获取问题的回答列表
+     *
+     * @param key
+     * @param Quid
+     * @param orderStr
+     * @param callBack
+     */
+
+    public void answerList(String key, String Quid, String orderStr, JsonCallBack<GingResponse<AnswerWrapperListBean>> callBack) {
+        OkGo.post(WebUrls.getUrl(WebUrls.answer_list))
+                .tag(mContext)
+                .cacheKey(key)
+                .params("Quid", Quid)
+                .params("OrderStr", orderStr)
+                .execute(callBack);
+
+    }
+
+    /**
+     * 根据quid获取问题详情   GET方法
+     *
+     * @param key
+     * @param quid
+     * @param callBack
+     */
+    public void questionDetail(String key, String quid, JsonCallBack<GingResponse<QuestionWrapper>> callBack) {
+        OkGo.get(WebUrls.getUrl(WebUrls.question_detail) + quid)
+                .tag(mContext)
+                .cacheKey(key)
+                .execute(callBack);
+
+    }
+
+    /**
+     * 用户退出登录
+     * @param key
+     * @param callBack
+     */
+    public void logout(String key, JsonCallBack callBack) {
+        OkGo.post(WebUrls.getUrl(WebUrls.logout))
+                .tag(mContext)
+                .cacheKey(key)
+                .execute(callBack);
+    }
 
 }

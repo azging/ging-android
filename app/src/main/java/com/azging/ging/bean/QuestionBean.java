@@ -143,4 +143,22 @@ public class QuestionBean extends BaseBean {
     public void setThumbPhotoUrls(List<String> ThumbPhotoUrls) {
         this.ThumbPhotoUrls = ThumbPhotoUrls;
     }
+
+    public String getCostType() {
+        if (Reward <= 0)
+            return "没星红包";
+        if (Reward <= 10)
+            return "一星红包";
+        if (Reward <= 20)
+            return "二星红包";
+        if (Reward <= 30)
+            return "三星红包";
+        if (Reward <= 40)
+            return "四星红包";
+        if (Reward <= 50)
+            return "五星红包";
+        if (Reward <= 100)
+            return "大红包";
+        return String.valueOf(Reward);
+    }
 }

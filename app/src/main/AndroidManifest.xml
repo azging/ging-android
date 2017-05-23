@@ -70,6 +70,7 @@
         <activity android:name=".view.HomeListActivity">
         </activity>
         <activity android:name=".view.PermissionsActivity"/>
+        <activity android:name=".view.QuestionDetailActivity"/>
     </application>
 
 </manifest>

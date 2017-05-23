@@ -1,8 +1,7 @@
 package com.azging.ging.utils;
 
-import android.text.TextWatcher;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.azging.ging.R;
@@ -29,6 +28,7 @@ public class UIHelper {
 
         view.setOnClickListener(onClickListener);
     }
+
     public static void setSwitchRowData(View view, String text, boolean isChecked, View.OnClickListener onClickListener) {
         TextView textView = (TextView) view.findViewById(R.id.text);
         textView.setText(text);
@@ -37,6 +37,16 @@ public class UIHelper {
         button.setChecked(isChecked);
 
         view.setOnClickListener(onClickListener);
+    }
+
+
+    public static void setIconText(View view, String text, int resourceid, View.OnClickListener clickListener) {
+        TextView textView = (TextView) view.findViewById(R.id.text);
+        textView.setText(text);
+
+        ImageView imageView = (ImageView) view.findViewById(R.id.icon);
+        imageView.setImageResource(resourceid);
+        view.setOnClickListener(clickListener);
     }
 
 //    public static void setEditTextRowData(View view, String text, String hint, TextWatcher textWatcher) {

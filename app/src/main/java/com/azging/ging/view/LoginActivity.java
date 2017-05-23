@@ -16,12 +16,14 @@ import com.azging.ging.bean.AuthCodeBean;
 import com.azging.ging.bean.GingResponse;
 import com.azging.ging.bean.UserBean;
 import com.azging.ging.utils.AppManager;
+import com.azging.ging.utils.GsonUtil;
 import com.azging.ging.utils.Log;
 import com.azging.ging.utils.PrefConstants;
 import com.azging.ging.utils.SharedPreferencesHelper;
 import com.azging.ging.utils.ToastUtil;
 import com.azging.ging.net.JsonCallBack;
 import com.azging.ging.net.WebUtils;
+import com.google.gson.Gson;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -98,7 +100,7 @@ public class LoginActivity extends BaseMainActivity implements IActivity {
                         ToastUtil.showShort("登录成功");
                         if (userBeanGingResponse.Data != null) {
                             SharedPreferencesHelper.getInstance(AppManager.getAppManager().currentActivity())
-                                    .putStringValue(PrefConstants.KEY_CURRENT_USER, userBeanGingResponse.Data.toString());
+                                    .putStringValue(PrefConstants.KEY_CURRENT_USER, GsonUtil.jsonToString(userBeanGingResponse.Data));
                             Log.printJSON("user su", userBeanGingResponse.Data.toString());
                         }
                     }

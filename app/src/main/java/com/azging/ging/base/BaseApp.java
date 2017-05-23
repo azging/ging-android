@@ -20,8 +20,10 @@ import com.amap.api.location.AMapLocationListener;
 import com.azging.ging.BuildConfig;
 import com.azging.ging.R;
 import com.azging.ging.bean.ActivityBean;
+import com.azging.ging.bean.UserBean;
 import com.azging.ging.net.JsonCallBack;
 import com.azging.ging.net.WebUtils;
+import com.azging.ging.utils.GsonUtil;
 import com.azging.ging.utils.PermissionsChecker;
 import com.azging.ging.utils.PhoneUtil;
 import com.azging.ging.utils.PrefConstants;
@@ -65,6 +67,7 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
 
     public static BaseApp app;
     public static AMapLocation currentLocation;
+    private static UserBean currentUser;
 
     //声明AMapLocationClient类对象
     public AMapLocationClient mLocationClient = null;
@@ -362,5 +365,12 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
         }
     }
 
+
+    public UserBean getCurrentUser() {
+        if (currentUser == null) {
+            currentUser = GsonUtil.jsonToBean(SharedPreferencesHelper.getInstance(app).getStringValue(PrefConstants.KEY_CURRENT_USER), UserBean.class);
+        }
+        return currentUser;
+    }
 
 }

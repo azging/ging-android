@@ -4,7 +4,6 @@ import android.os.CountDownTimer;
 
 
 /**
- * 项目名称：ProjectFunction
  */
 public class CircleCountDownTimer extends CountDownTimer {
     private static final long MILLIS_IN_FUTURE = 6 * 1000;

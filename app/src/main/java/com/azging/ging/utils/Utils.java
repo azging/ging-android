@@ -3,6 +3,9 @@ package com.azging.ging.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.azging.ging.base.BaseApp;
+import com.azging.ging.base.BaseBean;
+
 /**
  * 数据库存储    文件存储   Sp      内容提供者
  *
@@ -20,6 +23,10 @@ public class Utils {
         return run;
     }
 
+
+    public static boolean isLoggedIn() {
+        return BaseApp.app.getCurrentUser() != null;
+    }
 //    public static String toDateStringFromIso(String sdate) {
 //        if ("null".equals(sdate) || "NULL".equals(sdate) || "".equals(sdate) || sdate == null) {
 //            return "";

@@ -18,6 +18,7 @@ import com.azging.ging.bean.GingResponse;
 import com.azging.ging.bean.QuestionWrapper;
 import com.azging.ging.net.JsonCallBack;
 import com.azging.ging.net.WebUtils;
+import com.azging.ging.utils.AppManager;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -68,9 +69,8 @@ public class PublishQuestionActivity extends BaseMainActivity implements IActivi
     void submit(View view) {
         switch (view.getId()) {
             case R.id.header_back:
-
+                AppManager.getAppManager().finishActivity();
                 break;
-
             case R.id.add_img1:
 
                 break;
