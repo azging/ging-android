@@ -61,4 +61,8 @@
     <string name="my_wallet">我的红包</string>
     <string name="feedback">意见反馈</string>
     <string name="about_us">关于我们</string>
+
+    <string name="all">全部</string>
+    <string name="no_result">未解答</string>
+    <string name="get_money">获得红包</string>
 </resources>

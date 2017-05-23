@@ -44,4 +44,11 @@ public class WebUrls {
 
     //用户退出登录
     static String logout = "/api/v1/user/logout/";
+
+    //我的提问列表
+    static String user_question_list="/api/v1/user/question/list/";
+
+    //我的回答列表
+    static String user_answer_list="/api/v1/user/answer/list/";
+
 }

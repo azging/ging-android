@@ -16,7 +16,6 @@ import com.azging.ging.bean.QuestionWrapperListBean;
 import com.azging.ging.customui.DividerDecoration;
 import com.azging.ging.net.JsonCallBack;
 import com.azging.ging.net.WebUtils;
-import com.azging.ging.utils.GsonUtil;
 import com.azging.ging.utils.Log;
 import com.azging.ging.utils.ToastUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -40,6 +39,11 @@ public class QuestionListFragment extends BaseFragment implements BaseQuickAdapt
     public static final int TYPE_NEW_QUESTION_LIST = 1;
     public static final int TYPE_HOT_QUESTION_LIST = 2;
     public static final int TYPE_NEARBY_QUESTION_LIST = 3;
+    public static final int TYPE_MY_QUESTION_ALL = 4;
+    public static final int TYPE_MY_QUESTION_NO_RESULT = 5;
+    public static final int TYPE_MY_ANSWER_ALL = 6;
+    public static final int TYPE_MY_ANSWER_GET_MONEY = 7;
+
     private String TAG = "QuestionListFragment";
 
 
@@ -116,7 +120,7 @@ public class QuestionListFragment extends BaseFragment implements BaseQuickAdapt
 
 //                Log.printJSON("question", GsonUtil.jsonToString(gingResponse.Data));
                 questionAdapter.setNewData(gingResponse.Data.getQuestionWrapperList());
-                orderStr=gingResponse.Data.getOrderStr();
+                orderStr = gingResponse.Data.getOrderStr();
 //                mCurrentCounter = PAGE_SIZE;
                 mData.addAll(gingResponse.Data.getQuestionWrapperList());
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -139,6 +143,18 @@ public class QuestionListFragment extends BaseFragment implements BaseQuickAdapt
             case TYPE_NEARBY_QUESTION_LIST:
                 Log.e("nearby");
                 webUtils.nearbyQuestionList(TAG + "NEARBY", orderStr, callBack);
+                break;
+            case TYPE_MY_QUESTION_ALL:
+                webUtils.userQuestionList(TAG + "USER_QUESTION_ALL", 0, orderStr, callBack);
+                break;
+            case TYPE_MY_QUESTION_NO_RESULT:
+                webUtils.userQuestionList(TAG + "USER_QUESTION_UN_RESULT", 1, orderStr, callBack);
+                break;
+            case TYPE_MY_ANSWER_ALL:
+                webUtils.userAnswerList(TAG + "USER_ANSWER_ALL", 0, orderStr, callBack);
+                break;
+            case TYPE_MY_ANSWER_GET_MONEY:
+                webUtils.userAnswerList(TAG + "USER_ANSWER_GET_MONEY", 1, orderStr, callBack);
                 break;
         }
     }

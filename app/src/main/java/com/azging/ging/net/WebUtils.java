@@ -2,7 +2,6 @@ package com.azging.ging.net;
 
 import android.content.Context;
 
-import com.azging.ging.bean.AnswerWrapper;
 import com.azging.ging.bean.AnswerWrapperListBean;
 import com.azging.ging.bean.AuthCodeBean;
 import com.azging.ging.bean.GingResponse;
@@ -199,6 +198,7 @@ public class WebUtils extends WebBase {
 
     /**
      * 用户退出登录
+     *
      * @param key
      * @param callBack
      */
@@ -209,4 +209,37 @@ public class WebUtils extends WebBase {
                 .execute(callBack);
     }
 
+    /**
+     * 我的提问列表   StatusType  问题状态：0为全部，1为未解决，2为已解决
+     *
+     * @param key
+     * @param StatusType
+     * @param OrderStr
+     * @param callBack
+     */
+    public void userQuestionList(String key, int StatusType, String OrderStr, JsonCallBack<GingResponse<QuestionWrapperListBean>> callBack) {
+        OkGo.post(WebUrls.getUrl(WebUrls.user_question_list))
+                .tag(mContext)
+                .cacheKey(key)
+                .params("StatusType", StatusType)
+                .params("OrderStr", OrderStr)
+                .execute(callBack);
+    }
+
+    /**
+     * 我的回答列表    StatusType   回答状态：0为全部，1为被采纳获得红包
+     *
+     * @param key
+     * @param StatusType
+     * @param OrderStr
+     * @param callBack
+     */
+    public void userAnswerList(String key, int StatusType, String OrderStr, JsonCallBack<GingResponse<QuestionWrapperListBean>> callBack) {
+        OkGo.post(WebUrls.getUrl(WebUrls.user_answer_list))
+                .tag(mContext)
+                .cacheKey(key)
+                .params("StatusType", StatusType)
+                .params("OrderStr", OrderStr)
+                .execute(callBack);
+    }
 }
