@@ -160,4 +160,9 @@
     <color name="grassgreen">#99cc33</color><!--草绿色 -->
     <color name="gray_cc">#cccccc</color><!--灰色cc -->
     <color name="gray_8f">#8f8f8f</color><!--灰色8f -->
+
+    <color name="ging_orange">#f39b22</color>
+    <color name="ging_orange2">#FF781C</color>
+    <color name="text_gray">#b4b5b5</color>
+    <color name="text_gray2">#888889</color>
 </resources>

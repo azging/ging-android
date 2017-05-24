@@ -5,23 +5,40 @@
                 android:layout_height="match_parent"
                 tools:context="com.azging.ging.view.LoginActivity">
 
-    <include layout="@layout/header_title"/>
+    <ImageView
+        android:id="@+id/back_btn"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_alignParentRight="true"
+        android:layout_margin="18dp"
+        android:src="@drawable/cross"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="19sp"
+        android:textColor="@color/ging_orange"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:text="登录知应"/>
     <LinearLayout
         android:id="@+id/phone_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/header_view"
+        android:layout_below="@+id/back_btn"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/bg_edit"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:textColor="@color/text_gray"
             android:text="@string/phone_num"/>
 
 
@@ -43,17 +60,18 @@
             android:id="@+id/send_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="18dp"
             android:text="@string/send_code"
-            android:textColor="@color/indianred"
+            android:textColor="@color/ging_orange"
             />
     </LinearLayout>
 
-    <View
-        style="@style/break_line_gray"
-        android:layout_below="@+id/phone_view"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        />
+    <!--<View-->
+    <!--style="@style/break_line_gray"-->
+    <!--android:layout_below="@+id/phone_view"-->
+    <!--android:layout_marginLeft="20dp"-->
+    <!--android:layout_marginRight="20dp"-->
+    <!--/>-->
 
     <LinearLayout
         android:id="@+id/password_view"
@@ -62,13 +80,16 @@
         android:layout_below="@+id/phone_view"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_edit"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:textColor="@color/text_gray"
             android:text="@string/verify_code"/>
 
 
@@ -85,34 +106,36 @@
             />
     </LinearLayout>
 
-    <View
-        style="@style/break_line_gray"
-        android:layout_below="@+id/password_view"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        />
+    <!--<View-->
+    <!--style="@style/break_line_gray"-->
+    <!--android:layout_below="@+id/password_view"-->
+    <!--android:layout_marginLeft="20dp"-->
+    <!--android:layout_marginRight="20dp"-->
+    <!--/>-->
 
     <TextView
         android:id="@+id/prompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/password_view"
-        android:layout_marginLeft="20dp"
+        android:textColor="@color/text_gray"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="7dp"
         android:text="@string/prompt"
-        android:textSize="11sp"
+        android:textSize="12sp"
         />
 
     <TextView
         android:id="@+id/login_btn"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="46dp"
         android:layout_below="@+id/password_view"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="63dp"
-        android:background="@color/orangered"
+        android:layout_marginTop="56dp"
+        android:textSize="17sp"
+        android:background="@drawable/bg_logoff"
         android:gravity="center"
         android:text="@string/login"
         />
@@ -122,21 +145,29 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/login_btn"
         android:layout_marginTop="50dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
         android:gravity="center"
         android:orientation="horizontal">
 
         <View
-            android:layout_width="100dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="1dp"
             android:background="@color/darkgoldenrod"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="22dp"
+            android:textColor="@color/text_gray"
             android:text="@string/login_prompt"/>
 
         <View
-            android:layout_width="100dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="1dp"
             android:background="@color/darkgoldenrod"/>
     </LinearLayout>
@@ -154,13 +185,14 @@
         <ImageView
             android:layout_width="44dp"
             android:layout_height="40dp"
-            android:src="@drawable/umeng_socialize_wechat"
+            android:src="@drawable/icon_weixin"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textColor="@color/text_gray"
             android:text="@string/weixin_login_text"
             />
     </LinearLayout>
@@ -169,9 +201,9 @@
         android:id="@+id/agreement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/weixin_login"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
         android:gravity="center"
         android:text="@string/agreement"
         android:textSize="12sp"

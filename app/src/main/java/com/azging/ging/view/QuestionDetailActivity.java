@@ -1,10 +1,8 @@
 package com.azging.ging.view;
 
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +17,6 @@ import android.widget.TextView;
 
 import com.azging.ging.R;
 import com.azging.ging.adapter.AnswerAdapter;
-import com.azging.ging.adapter.QuestionAdapter;
 import com.azging.ging.base.BaseMainActivity;
 import com.azging.ging.base.IActivity;
 import com.azging.ging.bean.AnswerWrapper;
@@ -41,7 +38,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Response;
@@ -176,10 +172,12 @@ public class QuestionDetailActivity extends BaseMainActivity implements IActivit
             @Override
             public void onSuccess(GingResponse<AnswerWrapperListBean> gingResponse, Call call, Response response) {
                 super.onSuccess(gingResponse, call, response);
-                adapter.setNewData(gingResponse.Data.getAnswerWrapperList());
 //                mCurrentCounter = PAGE_SIZE;
                 orderStr = gingResponse.Data.getOrderStr();
-                mData.addAll(gingResponse.Data.getAnswerWrapperList());
+                if (gingResponse.Data.getAnswerWrapperList() != null) {
+                    adapter.setNewData(gingResponse.Data.getAnswerWrapperList());
+                    mData.addAll(gingResponse.Data.getAnswerWrapperList());
+                }
                 mSwipeRefreshLayout.setRefreshing(false);
                 adapter.setEnableLoadMore(true);
             }
@@ -196,11 +194,13 @@ public class QuestionDetailActivity extends BaseMainActivity implements IActivit
             public void onSuccess(GingResponse<AnswerWrapperListBean> gingResponse, Call call, Response response) {
                 super.onSuccess(gingResponse, call, response);
 
-                adapter.addData(gingResponse.Data.getAnswerWrapperList());
+                int oldSize = mData.size();
+                if (gingResponse.Data.getAnswerWrapperList() != null) {
+                    mData.addAll(gingResponse.Data.getAnswerWrapperList());
+                    adapter.addData(gingResponse.Data.getAnswerWrapperList());
+                }
                 adapter.loadMoreComplete();
 
-                int oldSize = mData.size();
-                mData.addAll(gingResponse.Data.getAnswerWrapperList());
 
                 if (mData.size() == oldSize || orderStr.equals(gingResponse.Data.getOrderStr())) {
                     ToastUtil.showShort("没有更多了");

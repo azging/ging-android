@@ -119,10 +119,12 @@ public class QuestionListFragment extends BaseFragment implements BaseQuickAdapt
                 super.onSuccess(gingResponse, call, response);
 
 //                Log.printJSON("question", GsonUtil.jsonToString(gingResponse.Data));
-                questionAdapter.setNewData(gingResponse.Data.getQuestionWrapperList());
+                if (gingResponse.Data.getQuestionWrapperList() != null) {
+                    questionAdapter.setNewData(gingResponse.Data.getQuestionWrapperList());
+                    mData.addAll(gingResponse.Data.getQuestionWrapperList());
+                }
                 orderStr = gingResponse.Data.getOrderStr();
 //                mCurrentCounter = PAGE_SIZE;
-                mData.addAll(gingResponse.Data.getQuestionWrapperList());
                 mSwipeRefreshLayout.setRefreshing(false);
                 questionAdapter.setEnableLoadMore(true);
 
@@ -167,12 +169,13 @@ public class QuestionListFragment extends BaseFragment implements BaseQuickAdapt
             @Override
             public void onSuccess(GingResponse<QuestionWrapperListBean> gingResponse, Call call, Response response) {
                 super.onSuccess(gingResponse, call, response);
-
-                questionAdapter.addData(gingResponse.Data.getQuestionWrapperList());
+                int oldSize = mData.size();
+                if (gingResponse.Data.getQuestionWrapperList() != null) {
+                    questionAdapter.addData(gingResponse.Data.getQuestionWrapperList());
+                    mData.addAll(gingResponse.Data.getQuestionWrapperList());
+                }
                 questionAdapter.loadMoreComplete();
 
-                int oldSize = mData.size();
-                mData.addAll(gingResponse.Data.getQuestionWrapperList());
 
                 if (mData.size() == oldSize || orderStr.equals(gingResponse.Data.getOrderStr())) {
                     ToastUtil.showShort("没有更多了");

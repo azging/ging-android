@@ -1,10 +1,7 @@
 package com.azging.ging.base;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.Application;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,22 +19,19 @@ import com.azging.ging.R;
 import com.azging.ging.bean.ActivityBean;
 import com.azging.ging.bean.UserBean;
 import com.azging.ging.net.JsonCallBack;
-import com.azging.ging.net.WebUtils;
-import com.azging.ging.utils.GsonUtil;
-import com.azging.ging.utils.PermissionsChecker;
-import com.azging.ging.utils.PhoneUtil;
-import com.azging.ging.utils.PrefConstants;
-import com.azging.ging.utils.SharedPreferencesHelper;
 import com.azging.ging.net.NetChangeObserver;
 import com.azging.ging.net.NetWorkUtil;
 import com.azging.ging.net.NetworkStateReceiver;
+import com.azging.ging.net.WebUtils;
 import com.azging.ging.utils.AppManager;
+import com.azging.ging.utils.GsonUtil;
 import com.azging.ging.utils.Log;
+import com.azging.ging.utils.PrefConstants;
+import com.azging.ging.utils.SharedPreferencesHelper;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.store.PersistentCookieStore;
-import com.lzy.okgo.model.HttpHeaders;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
@@ -361,7 +355,6 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
         if (activity instanceof IActivity) {
             ActivityBean bean = activity.getIntent().getParcelableExtra("ActivityBean");
             bean.getUnbinder().unbind();
-            AppManager.getAppManager().finishActivity();
         }
     }
 

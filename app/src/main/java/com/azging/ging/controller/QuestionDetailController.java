@@ -47,6 +47,8 @@ public class QuestionDetailController extends BaseController {
     }
 
     public void wrapData(QuestionWrapper item) {
+        if (item==null)
+            return;
         QuestionBean questionBean = item.getQuestion();
         UserBean userBean = item.getCreateUserWrapper().getUser();
         ImageLoader.getInstance().displayImage(mContext, userBean.getThumbAvatarUrl(), viewHolder.userAvatar);

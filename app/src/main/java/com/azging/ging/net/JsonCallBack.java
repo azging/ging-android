@@ -4,11 +4,15 @@ import com.azging.ging.bean.GingResponse;
 import com.azging.ging.bean.SimpleResponse;
 import com.azging.ging.utils.AppManager;
 import com.azging.ging.utils.GsonUtil;
+import com.azging.ging.utils.JsonUtils;
 import com.azging.ging.utils.Log;
 import com.azging.ging.utils.ToastUtil;
 import com.google.gson.stream.JsonReader;
 import com.lzy.okgo.callback.AbsCallback;
 
+import org.json.JSONObject;
+
+import java.io.StringReader;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
@@ -59,9 +63,12 @@ public abstract class JsonCallBack<T> extends AbsCallback<T> {
         //这里获取最终内部泛型的类型 com.lzy.demo.model.ServerModel
         Type typeArgument = ((ParameterizedType) type).getActualTypeArguments()[0];
 
+        JSONObject jsonObject = new JSONObject(response.body().string());
+        JsonUtils.cleanDirtyJsonObject(jsonObject);
         //这里我们既然都已经拿到了泛型的真实类型，即对应的 class ，那么当然可以开始解析数据了，我们采用 Gson 解析
         //以下代码是根据泛型解析数据，返回对象，返回的对象自动以参数的形式传递到 onSuccess 中，可以直接使用
-        JsonReader jsonReader = new JsonReader(response.body().charStream());
+//        JsonReader jsonReader = new JsonReader(response.body().charStream());
+        JsonReader jsonReader= new JsonReader(new StringReader(jsonObject.toString()));
         if (typeArgument == Void.class) {
             //无数据类型,表示没有data数据的情况（以  new DialogCallback<LzyResponse<Void>>(this)  以这种形式传递的泛型)
             SimpleResponse simpleResponse = GsonUtil.fromJson(jsonReader, SimpleResponse.class);
