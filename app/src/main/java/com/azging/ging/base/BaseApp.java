@@ -61,7 +61,6 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
 
     public static BaseApp app;
     public static AMapLocation currentLocation;
-    private static UserBean currentUser;
 
     //声明AMapLocationClient类对象
     public AMapLocationClient mLocationClient = null;
@@ -360,10 +359,10 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
 
 
     public UserBean getCurrentUser() {
-        if (currentUser == null) {
-            currentUser = GsonUtil.jsonToBean(SharedPreferencesHelper.getInstance(app).getStringValue(PrefConstants.KEY_CURRENT_USER), UserBean.class);
-        }
-        return currentUser;
+        if (SharedPreferencesHelper.getInstance(app).getStringValue(PrefConstants.KEY_CURRENT_USER) != null)
+            return GsonUtil.jsonToBean(SharedPreferencesHelper.getInstance(app).getStringValue(PrefConstants.KEY_CURRENT_USER), UserBean.class);
+        else
+            return null;
     }
 
 }

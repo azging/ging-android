@@ -65,10 +65,19 @@ public class PublishQuestionActivity extends BaseMainActivity implements IActivi
 
         headerTitle.setText("提问");
         headerMore.setVisibility(View.INVISIBLE);
+
+
+        UIHelper.setSwitchRowData(anonymousView, getResources().getString(R.string.anonymity_question), isAnonymous, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isAnonymous = !isAnonymous;
+                UIHelper.setSwitchRowData(anonymousView, getResources().getString(R.string.anonymity_question), isAnonymous, this);
+            }
+        });
     }
 
 
-    @OnClick({R.id.header_back, R.id.add_img1, R.id.add_img2, R.id.add_img3, R.id.reward_view, R.id.anonymous_view, R.id.publish_btn})
+    @OnClick({R.id.header_back, R.id.add_img1, R.id.add_img2, R.id.add_img3, R.id.reward_view, R.id.publish_btn})
     void submit(View view) {
         switch (view.getId()) {
             case R.id.header_back:
@@ -85,15 +94,6 @@ public class PublishQuestionActivity extends BaseMainActivity implements IActivi
                 break;
             case R.id.reward_view:
 
-                break;
-            case R.id.anonymous_view:
-                UIHelper.setSwitchRowData(anonymousView, getResources().getString(R.string.anonymity_question), isAnonymous, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        isAnonymous = !isAnonymous;
-                        UIHelper.setSwitchRowData(anonymousView, getResources().getString(R.string.anonymity_question), isAnonymous, this);
-                    }
-                });
                 break;
             case R.id.publish_btn:
                 webUtils.publishQuestion("PublishQuestion", edTitle.getText().toString(), edDescribe.getText().toString(), "", rewardF, isAnonymous ? 1 : 0, new JsonCallBack<GingResponse<QuestionWrapper>>() {

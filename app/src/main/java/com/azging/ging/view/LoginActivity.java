@@ -6,13 +6,13 @@ import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.azging.ging.R;
 import com.azging.ging.base.BaseMainActivity;
 import com.azging.ging.base.IActivity;
 import com.azging.ging.bean.AuthCodeBean;
+import com.azging.ging.bean.CreateUserWrapper;
 import com.azging.ging.bean.GingResponse;
 import com.azging.ging.bean.UserBean;
 import com.azging.ging.net.JsonCallBack;
@@ -36,10 +36,6 @@ import okhttp3.Response;
 
 public class LoginActivity extends BaseMainActivity implements IActivity {
 
-    @BindView(R.id.header_back) ImageView headerBack;
-    @BindView(R.id.header_title) TextView headerTitle;
-    @BindView(R.id.header_more) ImageView headerMore;
-    @BindView(R.id.header_view) RelativeLayout headerView;
     @BindView(R.id.ed_phone) AppCompatEditText edPhone;
     @BindView(R.id.send_code) TextView sendCode;
     @BindView(R.id.phone_view) LinearLayout phoneView;
@@ -49,6 +45,7 @@ public class LoginActivity extends BaseMainActivity implements IActivity {
     @BindView(R.id.login_btn) TextView loginBtn;
     @BindView(R.id.weixin_login) LinearLayout weixinLogin;
     @BindView(R.id.agreement) TextView agreement;
+    @BindView(R.id.back_btn) ImageView mBackBtn;
 
     private WebUtils webUtils;
 
@@ -69,18 +66,13 @@ public class LoginActivity extends BaseMainActivity implements IActivity {
         webUtils = new WebUtils(this);
 
 
-        headerView.setBackgroundResource(R.color.floralwhite);
-        headerBack.setVisibility(View.GONE);
-        headerMore.setVisibility(View.GONE);
-        headerTitle.setText(R.string.login);
-
     }
 
-    @OnClick({R.id.header_back, R.id.send_code, R.id.login_btn, R.id.weixin_login})
+    @OnClick({R.id.back_btn, R.id.send_code, R.id.login_btn, R.id.weixin_login})
     void submit(View view) {
         switch (view.getId()) {
-            case R.id.header_back:
-
+            case R.id.back_btn:
+                AppManager.getAppManager().finishActivity();
                 break;
             case R.id.send_code:
                 webUtils.sentAuthcode("MainActivity", edPhone.getText().toString(), new JsonCallBack<GingResponse<AuthCodeBean>>() {
@@ -92,15 +84,15 @@ public class LoginActivity extends BaseMainActivity implements IActivity {
                 });
                 break;
             case R.id.login_btn:
-                webUtils.phoneLogin("MainActivity", edPhone.getText().toString(), edPassword.getText().toString(), new JsonCallBack<GingResponse<UserBean>>() {
+                webUtils.phoneLogin("MainActivity", edPhone.getText().toString(), edPassword.getText().toString(), new JsonCallBack<GingResponse<CreateUserWrapper>>() {
                     @Override
-                    public void onSuccess(GingResponse<UserBean> userBeanGingResponse, Call call, Response response) {
-                        super.onSuccess(userBeanGingResponse, call, response);
+                    public void onSuccess(GingResponse<CreateUserWrapper> gingResponse, Call call, Response response) {
+                        super.onSuccess(gingResponse, call, response);
                         ToastUtil.showShort("登录成功");
-                        if (userBeanGingResponse.Data != null) {
+                        if (gingResponse.Data != null) {
                             SharedPreferencesHelper.getInstance(AppManager.getAppManager().currentActivity())
-                                    .putStringValue(PrefConstants.KEY_CURRENT_USER, GsonUtil.jsonToString(userBeanGingResponse.Data));
-                            Log.printJSON("user su", userBeanGingResponse.toString());
+                                    .putStringValue(PrefConstants.KEY_CURRENT_USER, GsonUtil.jsonToString(gingResponse.Data.getUser()));
+                            Log.printJSON("user su", gingResponse.toString());
                             AppManager.getAppManager().finishActivity();
                         }
                     }
@@ -152,4 +144,5 @@ public class LoginActivity extends BaseMainActivity implements IActivity {
             return 2;
         return 0;
     }
+
 }

@@ -71,6 +71,7 @@ public class MainActivity extends BaseMainActivity implements IActivity {
         }
 
         headerTitle.setText(R.string.app_name);
+        headerBack.setVisibility(View.INVISIBLE);
 
         fragments.add(QuestionListFragment.startFragment(QuestionListFragment.TYPE_NEW_QUESTION_LIST));
         fragments.add(QuestionListFragment.startFragment(QuestionListFragment.TYPE_HOT_QUESTION_LIST));
@@ -103,7 +104,10 @@ public class MainActivity extends BaseMainActivity implements IActivity {
                     LoginActivity.startActivity(this);
                 break;
             case R.id.publish_question:
-                PublishQuestionActivity.startActivity(this);
+                if (Utils.isLoggedIn())
+                    PublishQuestionActivity.startActivity(this);
+                else
+                    LoginActivity.startActivity(this);
                 break;
         }
     }

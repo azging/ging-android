@@ -152,4 +152,23 @@ public class UserBean extends BaseBean {
         else
             return R.drawable.icon_girl;
     }
+
+    @Override
+    public String toString() {
+        return "UserBean{" +
+                "Uuid='" + Uuid + '\'' +
+                ", Cid='" + Cid + '\'' +
+                ", LoginType=" + LoginType +
+                ", Telephone='" + Telephone + '\'' +
+                ", WechatId='" + WechatId + '\'' +
+                ", Nick='" + Nick + '\'' +
+                ", AvatarUrl='" + AvatarUrl + '\'' +
+                ", ThumbAvatarUrl='" + ThumbAvatarUrl + '\'' +
+                ", Gender=" + Gender +
+                ", LiveCityId=" + LiveCityId +
+                ", LiveCityName='" + LiveCityName + '\'' +
+                ", Type=" + Type +
+                ", UpdateTime='" + UpdateTime + '\'' +
+                '}';
+    }
 }

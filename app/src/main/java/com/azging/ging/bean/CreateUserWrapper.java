@@ -23,4 +23,10 @@ public class CreateUserWrapper extends BaseBean {
         this.User = User;
     }
 
+    @Override
+    public String toString() {
+        return "CreateUserWrapper{" +
+                "User=" + User +
+                '}';
+    }
 }

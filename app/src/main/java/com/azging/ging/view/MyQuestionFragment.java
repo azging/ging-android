@@ -69,5 +69,4 @@ public class MyQuestionFragment extends BaseFragment {
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
 
-
 }

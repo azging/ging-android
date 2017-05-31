@@ -55,6 +55,8 @@
             android:minHeight="30dp"
             app:tabIndicatorHeight="2dp"
             app:tabMode="fixed"
+            app:tabIndicatorColor="@color/ging_orange"
+            app:tabSelectedTextColor="@color/ging_orange"
             />
 
         <android.support.v4.view.ViewPager

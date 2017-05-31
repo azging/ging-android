@@ -11,14 +11,16 @@ import com.azging.ging.R;
 import com.azging.ging.base.BaseMainActivity;
 import com.azging.ging.base.IActivity;
 import com.azging.ging.bean.UserBean;
-import com.azging.ging.net.JsonCallBack;
 import com.azging.ging.net.WebUtils;
 import com.azging.ging.utils.AppManager;
+import com.azging.ging.utils.GsonUtil;
 import com.azging.ging.utils.ImageLoader;
+import com.azging.ging.utils.Log;
 import com.azging.ging.utils.PrefConstants;
 import com.azging.ging.utils.SharedPreferencesHelper;
 import com.azging.ging.utils.ToastUtil;
 import com.azging.ging.utils.UIHelper;
+import com.lzy.okgo.callback.StringCallback;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -61,37 +63,39 @@ public class UserHomeActivity extends BaseMainActivity implements IActivity {
         webUtils = new WebUtils(this);
         userBean = (UserBean) getIntent().getSerializableExtra(KEY_USER);
 
+        Log.printJSON(GsonUtil.jsonToString(userBean));
+
         wrapData();
 
 
         UIHelper.setIconText(myQuestion, getString(R.string.my_question), R.drawable.icon_my_question, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                HomeListActivity.startActivity(UserHomeActivity.this, HomeListActivity.TYPE_QUESTION);
             }
         });
         UIHelper.setIconText(myAnswer, getString(R.string.my_answer), R.drawable.icon_my_answer, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                HomeListActivity.startActivity(UserHomeActivity.this, HomeListActivity.TYPE_ANSWER);
             }
         });
         UIHelper.setIconText(myWallet, getString(R.string.my_wallet), R.drawable.icon_my_wallet, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                HomeListActivity.startActivity(UserHomeActivity.this, HomeListActivity.TYPE_WALLET);
             }
         });
         UIHelper.setIconText(feedback, getString(R.string.feedback), R.drawable.icon_feedback, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                HomeListActivity.startActivity(UserHomeActivity.this, HomeListActivity.TYPE_FEEDBACK);
             }
         });
         UIHelper.setIconText(aboutUs, getString(R.string.about_us), R.drawable.icon_about_us, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                HomeListActivity.startActivity(UserHomeActivity.this, HomeListActivity.TYPE_ABOUT_US);
             }
         });
     }
@@ -106,11 +110,11 @@ public class UserHomeActivity extends BaseMainActivity implements IActivity {
     void submit(View view) {
         switch (view.getId()) {
             case R.id.logoff:
-                webUtils.logout(TAG, new JsonCallBack() {
+                webUtils.logout(TAG, new StringCallback() {
                     @Override
-                    public void onSuccess(Object o, Call call, Response response) {
-                        super.onSuccess(o, call, response);
-                        SharedPreferencesHelper.getInstance(AppManager.getAppManager().currentActivity()).putStringValue(PrefConstants.KEY_CURRENT_USER, null);
+                    public void onSuccess(String s, Call call, Response response) {
+                        SharedPreferencesHelper.getInstance(UserHomeActivity.this).remove(PrefConstants.KEY_CURRENT_USER);
+                        SharedPreferencesHelper.getInstance(UserHomeActivity.this).clear();
                         ToastUtil.showLong("退出成功");
                         AppManager.getAppManager().finishActivity();
                     }

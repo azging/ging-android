@@ -6,6 +6,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.azging.ging.R;
 import com.azging.ging.adapter.QuestionAdapter;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.Unbinder;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -43,6 +46,9 @@ public class QuestionListFragment extends BaseFragment implements BaseQuickAdapt
     public static final int TYPE_MY_QUESTION_NO_RESULT = 5;
     public static final int TYPE_MY_ANSWER_ALL = 6;
     public static final int TYPE_MY_ANSWER_GET_MONEY = 7;
+    @BindView(R.id.empty_text) TextView mEmptyText;
+    @BindView(R.id.empty_view) LinearLayout mEmptyView;
+    Unbinder unbinder;
 
     private String TAG = "QuestionListFragment";
 
@@ -127,6 +133,11 @@ public class QuestionListFragment extends BaseFragment implements BaseQuickAdapt
 //                mCurrentCounter = PAGE_SIZE;
                 mSwipeRefreshLayout.setRefreshing(false);
                 questionAdapter.setEnableLoadMore(true);
+                if (mData.size() == 0) {
+                    mEmptyView.setVisibility(View.VISIBLE);
+                } else {
+                    mEmptyView.setVisibility(View.GONE);
+                }
 
             }
         });
@@ -195,5 +206,4 @@ public class QuestionListFragment extends BaseFragment implements BaseQuickAdapt
             }
         });
     }
-
 }

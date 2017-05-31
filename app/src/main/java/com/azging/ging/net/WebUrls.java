@@ -6,9 +6,9 @@ package com.azging.ging.net;
 
 public class WebUrls {
 
-    private static String baseUrl_offline = "http://www.azging.com/dev/";
+    private static String baseUrl_offline = "http://www.azging.com/dev";
 
-    private static String baseUrl_online = "http://www.azging.com/ging/";
+    private static String baseUrl_online = "http://www.azging.com/ging";
 
     static String getUrl(String s) {
         return baseUrl_offline + s;

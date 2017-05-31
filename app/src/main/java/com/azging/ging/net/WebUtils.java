@@ -4,12 +4,14 @@ import android.content.Context;
 
 import com.azging.ging.bean.AnswerWrapperListBean;
 import com.azging.ging.bean.AuthCodeBean;
+import com.azging.ging.bean.CreateUserWrapper;
 import com.azging.ging.bean.GingResponse;
 import com.azging.ging.bean.QuestionWrapper;
 import com.azging.ging.bean.QuestionWrapperListBean;
 import com.azging.ging.bean.UserBean;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
+import com.lzy.okgo.callback.StringCallback;
 
 /**
  * Created by GG on 2017/5/19.
@@ -57,7 +59,7 @@ public class WebUtils extends WebBase {
      * @param callback
      */
 
-    public void phoneLogin(String key, String telephone, String authcode, JsonCallBack<GingResponse<UserBean>> callback) {
+    public void phoneLogin(String key, String telephone, String authcode, JsonCallBack<GingResponse<CreateUserWrapper>> callback) {
         OkGo.post(WebUrls.getUrl(WebUrls.login_phone))
                 .tag(mContext)
                 .cacheKey(key)
@@ -155,7 +157,7 @@ public class WebUtils extends WebBase {
      */
 
     public void nearbyQuestionList(String key, String orderStr, JsonCallBack<GingResponse<QuestionWrapperListBean>> callBack) {
-        OkGo.post(WebUrls.getUrl(WebUrls.hot_question_list))
+        OkGo.post(WebUrls.getUrl(WebUrls.nearby_question_list))
                 .tag(mContext)
                 .cacheKey(key)
                 .params("OrderStr", orderStr)
@@ -202,7 +204,7 @@ public class WebUtils extends WebBase {
      * @param key
      * @param callBack
      */
-    public void logout(String key, JsonCallBack callBack) {
+    public void logout(String key, StringCallback callBack) {
         OkGo.post(WebUrls.getUrl(WebUrls.logout))
                 .tag(mContext)
                 .cacheKey(key)
