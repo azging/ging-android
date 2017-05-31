@@ -64,31 +64,31 @@ public class UserHomeActivity extends BaseMainActivity implements IActivity {
         wrapData();
 
 
-        UIHelper.setIconText(myQuestion, getString(R.string.my_question), R.mipmap.ic_launcher_round, new View.OnClickListener() {
+        UIHelper.setIconText(myQuestion, getString(R.string.my_question), R.drawable.icon_my_question, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
-        UIHelper.setIconText(myAnswer, getString(R.string.my_answer), R.mipmap.ic_launcher_round, new View.OnClickListener() {
+        UIHelper.setIconText(myAnswer, getString(R.string.my_answer), R.drawable.icon_my_answer, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
-        UIHelper.setIconText(myWallet, getString(R.string.my_wallet), R.mipmap.ic_launcher_round, new View.OnClickListener() {
+        UIHelper.setIconText(myWallet, getString(R.string.my_wallet), R.drawable.icon_my_wallet, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
-        UIHelper.setIconText(feedback, getString(R.string.feedback), R.mipmap.ic_launcher_round, new View.OnClickListener() {
+        UIHelper.setIconText(feedback, getString(R.string.feedback), R.drawable.icon_feedback, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
-        UIHelper.setIconText(aboutUs, getString(R.string.about_us), R.mipmap.ic_launcher_round, new View.OnClickListener() {
+        UIHelper.setIconText(aboutUs, getString(R.string.about_us), R.drawable.icon_about_us, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

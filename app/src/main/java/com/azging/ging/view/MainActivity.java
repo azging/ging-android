@@ -18,6 +18,7 @@ import com.azging.ging.R;
 import com.azging.ging.base.BaseApp;
 import com.azging.ging.base.BaseMainActivity;
 import com.azging.ging.base.IActivity;
+import com.azging.ging.utils.AppManager;
 import com.azging.ging.utils.PermissionsChecker;
 import com.azging.ging.utils.PhoneUtil;
 import com.azging.ging.utils.Utils;
@@ -69,6 +70,8 @@ public class MainActivity extends BaseMainActivity implements IActivity {
             initCookie();
         }
 
+        headerTitle.setText(R.string.app_name);
+
         fragments.add(QuestionListFragment.startFragment(QuestionListFragment.TYPE_NEW_QUESTION_LIST));
         fragments.add(QuestionListFragment.startFragment(QuestionListFragment.TYPE_HOT_QUESTION_LIST));
         fragments.add(QuestionListFragment.startFragment(QuestionListFragment.TYPE_NEARBY_QUESTION_LIST));
@@ -90,7 +93,7 @@ public class MainActivity extends BaseMainActivity implements IActivity {
     }
 
 
-    @OnClick({R.id.header_more})
+    @OnClick({R.id.header_more, R.id.publish_question})
     void submit(View view) {
         switch (view.getId()) {
             case R.id.header_more:
@@ -98,6 +101,9 @@ public class MainActivity extends BaseMainActivity implements IActivity {
                     UserHomeActivity.startActivity(this, BaseApp.app.getCurrentUser());
                 else
                     LoginActivity.startActivity(this);
+                break;
+            case R.id.publish_question:
+                PublishQuestionActivity.startActivity(this);
                 break;
         }
     }
@@ -146,7 +152,7 @@ public class MainActivity extends BaseMainActivity implements IActivity {
         // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
         if (requestCode == REQUEST_CODE) {
             if (resultCode == PermissionsActivity.PERMISSIONS_DENIED)
-                finish();
+                AppManager.getAppManager().finishAllActivity();
             else
                 initCookie();
         }

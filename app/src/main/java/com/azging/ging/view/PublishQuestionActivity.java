@@ -2,7 +2,6 @@ package com.azging.ging.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
@@ -19,6 +18,7 @@ import com.azging.ging.bean.QuestionWrapper;
 import com.azging.ging.net.JsonCallBack;
 import com.azging.ging.net.WebUtils;
 import com.azging.ging.utils.AppManager;
+import com.azging.ging.utils.UIHelper;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -41,9 +41,9 @@ public class PublishQuestionActivity extends BaseMainActivity implements IActivi
     @Nullable @BindView(R.id.title_view) LinearLayout titleView;
     @Nullable @BindView(R.id.publish_describe) TextView publishDescribe;
     @Nullable @BindView(R.id.ed_describe) AppCompatEditText edDescribe;
-    @Nullable @BindView(R.id.add_img1) ImageView addImg1;
-    @Nullable @BindView(R.id.add_img2) ImageView addImg2;
-    @Nullable @BindView(R.id.add_img3) ImageView addImg3;
+    @Nullable @BindView(R.id.add_img1) RelativeLayout addImg1;
+    @Nullable @BindView(R.id.add_img2) RelativeLayout addImg2;
+    @Nullable @BindView(R.id.add_img3) RelativeLayout addImg3;
     @Nullable @BindView(R.id.add_img_view) LinearLayout addImgView;
     @Nullable @BindView(R.id.length_limit) TextView lengthLimit;
     @Nullable @BindView(R.id.reward_view) View rewardView;
@@ -52,7 +52,7 @@ public class PublishQuestionActivity extends BaseMainActivity implements IActivi
 
     private WebUtils webUtils;
     private float rewardF;
-    private int anonymousI;
+    private boolean isAnonymous;
 
     @Override
     public int initView() {
@@ -62,6 +62,9 @@ public class PublishQuestionActivity extends BaseMainActivity implements IActivi
     @Override
     public void initData() {
         webUtils = new WebUtils(this);
+
+        headerTitle.setText("提问");
+        headerMore.setVisibility(View.INVISIBLE);
     }
 
 
@@ -84,10 +87,16 @@ public class PublishQuestionActivity extends BaseMainActivity implements IActivi
 
                 break;
             case R.id.anonymous_view:
-
+                UIHelper.setSwitchRowData(anonymousView, getResources().getString(R.string.anonymity_question), isAnonymous, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        isAnonymous = !isAnonymous;
+                        UIHelper.setSwitchRowData(anonymousView, getResources().getString(R.string.anonymity_question), isAnonymous, this);
+                    }
+                });
                 break;
             case R.id.publish_btn:
-                webUtils.publishQuestion("PublishQuestion", edTitle.getText().toString(), edDescribe.getText().toString(), "", rewardF, anonymousI, new JsonCallBack<GingResponse<QuestionWrapper>>() {
+                webUtils.publishQuestion("PublishQuestion", edTitle.getText().toString(), edDescribe.getText().toString(), "", rewardF, isAnonymous ? 1 : 0, new JsonCallBack<GingResponse<QuestionWrapper>>() {
                     @Override
                     public void onSuccess(GingResponse<QuestionWrapper> questionWrapperGingResponse, Call call, Response response) {
                         super.onSuccess(questionWrapperGingResponse, call, response);

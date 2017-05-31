@@ -1,19 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <include layout="@layout/header_title"/>
 
+    <View
+        style="@style/break_line_gray"/>
+
+    <LinearLayout
+        android:id="@+id/publish_question"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:src="@drawable/icon_publish"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="有问题？问一下~"
+            android:textColor="@color/ging_orange"/>
+        <ImageView
+            android:src="@drawable/icon_more"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="12dp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
 
     <LinearLayout
-        android:layout_below="@+id/header_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/header_view"
         android:orientation="vertical">
 
         <android.support.design.widget.TabLayout
@@ -33,4 +64,4 @@
     </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

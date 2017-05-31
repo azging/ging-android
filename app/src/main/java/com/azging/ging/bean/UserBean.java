@@ -1,5 +1,6 @@
 package com.azging.ging.bean;
 
+import com.azging.ging.R;
 import com.azging.ging.base.BaseBean;
 import com.google.gson.annotations.SerializedName;
 
@@ -144,22 +145,11 @@ public class UserBean extends BaseBean {
         this.UpdateTime = UpdateTime;
     }
 
-    @Override
-    public String toString() {
-        return "UserBean{" +
-                "Uuid='" + Uuid + '\'' +
-                ", Cid='" + Cid + '\'' +
-                ", LoginType=" + LoginType +
-                ", Telephone='" + Telephone + '\'' +
-                ", WechatId='" + WechatId + '\'' +
-                ", Nick='" + Nick + '\'' +
-                ", AvatarUrl='" + AvatarUrl + '\'' +
-                ", ThumbAvatarUrl='" + ThumbAvatarUrl + '\'' +
-                ", Gender=" + Gender +
-                ", LiveCityId=" + LiveCityId +
-                ", LiveCityName='" + LiveCityName + '\'' +
-                ", Type=" + Type +
-                ", UpdateTime='" + UpdateTime + '\'' +
-                '}';
+
+    public int getGenderIcon(){
+        if (Gender==1)
+            return R.drawable.icon_boy;
+        else
+            return R.drawable.icon_girl;
     }
 }

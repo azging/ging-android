@@ -6,10 +6,12 @@ package com.azging.ging.net;
 
 public class WebUrls {
 
-    private static String baseUrl = "http://47.93.28.215/ging";
+    private static String baseUrl_offline = "http://www.azging.com/dev/";
+
+    private static String baseUrl_online = "http://www.azging.com/ging/";
 
     static String getUrl(String s) {
-        return baseUrl + s;
+        return baseUrl_offline + s;
     }
 
     //设置应用初始化数据
@@ -46,9 +48,9 @@ public class WebUrls {
     static String logout = "/api/v1/user/logout/";
 
     //我的提问列表
-    static String user_question_list="/api/v1/user/question/list/";
+    static String user_question_list = "/api/v1/user/question/list/";
 
     //我的回答列表
-    static String user_answer_list="/api/v1/user/answer/list/";
+    static String user_answer_list = "/api/v1/user/answer/list/";
 
 }

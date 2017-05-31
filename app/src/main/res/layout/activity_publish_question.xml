@@ -9,6 +9,10 @@
 
     <include layout="@layout/header_title"/>
 
+    <View
+        style="@style/break_line_gray"
+        android:layout_below="@+id/header_view"/>
+
     <LinearLayout
         android:id="@+id/title_view"
         android:layout_width="match_parent"
@@ -22,9 +26,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
             android:text="@string/publish_title"
-            android:textColor="@color/ging_orange"/>
+            android:textColor="@color/ging_orange"
+            android:textSize="15sp"/>
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/ed_title"
@@ -86,29 +90,66 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/ed_describe"
-            android:layout_marginBottom="5dp"
             android:orientation="horizontal">
 
-            <ImageView
+            <RelativeLayout
                 android:id="@+id/add_img1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:src="@drawable/add_img"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_add_img">
 
-            <ImageView
+                <ImageView
+                    android:id="@+id/img1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/add_img"/>
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/add_img2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                tools:src="@mipmap/ic_launcher_round"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_add_img"
+                >
 
-            <ImageView
+                <ImageView
+                    android:id="@+id/img2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/add_img"/>
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/add_img3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                tools:src="@mipmap/ic_launcher_round"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/bg_add_img"
+                >
 
+                <ImageView
+                    android:id="@+id/img3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/add_img"/>
+            </RelativeLayout>
         </LinearLayout>
 
 
@@ -118,10 +159,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/ed_describe"
-            android:textColor="@color/text_gray"
-            android:textSize="14sp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="30dp"
+            android:textColor="@color/text_gray"
+            android:textSize="14sp"
             tools:text="0/280"/>
     </RelativeLayout>
 
@@ -140,7 +181,7 @@
 
         <include
             android:id="@+id/reward_view"
-            layout="@layout/row_list_accessible"/>
+            layout="@layout/row_list_edittext"/>
 
         <View style="@style/break_line_gray"/>
 

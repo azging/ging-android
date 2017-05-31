@@ -1,6 +1,7 @@
 package com.azging.ging.controller;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,6 +33,7 @@ public class QuestionDetailController extends BaseController {
         @BindView(R.id.question_img1) ImageView questionImg1;
         @BindView(R.id.question_img2) ImageView questionImg2;
         @BindView(R.id.question_img3) ImageView questionImg3;
+        @BindView(R.id.time_limit) TextView timeLimit;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -42,12 +44,11 @@ public class QuestionDetailController extends BaseController {
 
     public QuestionDetailController(Context context, View view) {
         super(context, view);
-        setViewHolder(new ViewHolder(view));
-
+        viewHolder = new ViewHolder(view);
     }
 
     public void wrapData(QuestionWrapper item) {
-        if (item==null)
+        if (item == null)
             return;
         QuestionBean questionBean = item.getQuestion();
         UserBean userBean = item.getCreateUserWrapper().getUser();
@@ -65,14 +66,13 @@ public class QuestionDetailController extends BaseController {
             if (questionBean.getThumbPhotoUrls().size() > 2)
                 ImageLoader.getInstance().displayImage(mContext, questionBean.getThumbPhotoUrls().get(2), viewHolder.questionImg3);
         }
-    }
-
-    public ViewHolder getViewHolder() {
-        return viewHolder;
-    }
-
-    public void setViewHolder(ViewHolder viewHolder) {
-        this.viewHolder = viewHolder;
+        if (questionBean.isComplete()) {
+            viewHolder.timeLimit.setText(R.string.complete);
+            viewHolder.timeLimit.setCompoundDrawables(ContextCompat.getDrawable(mContext, R.drawable.icon_time_gray), null, null, null);
+        } else {
+            viewHolder.timeLimit.setText(mContext.getResources().getString(R.string.time_limit, questionBean.getExpireTimeStr(), questionBean.getAnswerNum()));
+            viewHolder.timeLimit.setCompoundDrawables(ContextCompat.getDrawable(mContext, R.drawable.icon_time_gray), null, null, null);
+        }
     }
 
 }

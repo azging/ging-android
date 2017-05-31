@@ -83,6 +83,9 @@ public class QuestionDetailActivity extends BaseMainActivity implements IActivit
         webUtils = new WebUtils(this);
         questionWrapper = GsonUtil.jsonToBean(getIntent().getStringExtra(KEY_QUESTION_DETAIL), QuestionWrapper.class);
 
+        headerTitle.setText("求助详情");
+        headerMore.setVisibility(View.INVISIBLE);
+
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(47, 223, 189));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -99,7 +102,7 @@ public class QuestionDetailActivity extends BaseMainActivity implements IActivit
     void submit(View view) {
         switch (view.getId()) {
             case R.id.answer_question_btn://发布回答
-                PublishQuestionActivity.startActivity(this);
+
                 break;
             case R.id.header_back://返回
                 AppManager.getAppManager().finishActivity();

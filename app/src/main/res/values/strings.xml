@@ -65,4 +65,10 @@
     <string name="all">全部</string>
     <string name="no_result">未解答</string>
     <string name="get_money">获得红包</string>
+
+    <string name="time_limit">剩余%s，已有%d人回答，回答被选中者可获得红包</string>
+
+    <string name="complete">已完成</string>
+
+    <string name="anonymity_question">匿名提问</string>
 </resources>

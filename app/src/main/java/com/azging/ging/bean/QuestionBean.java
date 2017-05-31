@@ -1,5 +1,6 @@
 package com.azging.ging.bean;
 
+import com.azging.ging.R;
 import com.azging.ging.base.BaseBean;
 import com.google.gson.annotations.SerializedName;
 
@@ -26,6 +27,17 @@ public class QuestionBean extends BaseBean {
      * UpdateTime : 2017-05-20 03:48:00
      */
 
+
+    private int QUESTION_STATUS_DEFAULT = 0;//不用管
+    private int QUESTION_STATUS_UNPAID = 1;//未支付
+    private int QUESTION_STATUS_ANSWERING = 2;//可以回答了
+    private int QUESTION_STATUS_EXPIRED_NO_ANSWER = 3;//可以回答但是没有人回答的状态
+    private int QUESTION_STATUS_EXPIRED_NO_ANSWER_REFUNDED = 4;//可以回答但是没有人回答 所以在退款中的状态
+    private int QUESTION_STATUS_EXPIRED_UNADOPTED = 5;//没有选择 最佳答案的状态
+    private int QUESTION_STATUS_EXPIRED_UNADOPTED_PAID_FIRST = 6;//没有选择最佳答案  最后到期了 把钱转给第一个人的状态
+    private int QUESTION_STATUS_ADOPTED = 7;//用户正在选择的状态   这个状态 处于  存在与不存在之间
+    private int QUESTION_STATUS_ADOPTED_PAID_BEST = 8;//用户选好了 最佳答案的状态
+
     @SerializedName("Quid") private String Quid;
     @SerializedName("Title") private String Title;
     @SerializedName("Description") private String Description;
@@ -37,8 +49,10 @@ public class QuestionBean extends BaseBean {
     @SerializedName("ExpireTime") private String ExpireTime;
     @SerializedName("CreateTime") private String CreateTime;
     @SerializedName("UpdateTime") private String UpdateTime;
-    @SerializedName("PhotoUrls") private java.util.List<String> PhotoUrls;
-    @SerializedName("ThumbPhotoUrls") private java.util.List<String> ThumbPhotoUrls;
+    @SerializedName("PhotoUrls") private List<String> PhotoUrls;
+    @SerializedName("ThumbPhotoUrls") private List<String> ThumbPhotoUrls;
+    @SerializedName("AnswerNum") private int AnswerNum;
+    @SerializedName("ExpireTimeStr") private String ExpireTimeStr;
 
     public String getQuid() {
         return Quid;
@@ -144,21 +158,41 @@ public class QuestionBean extends BaseBean {
         this.ThumbPhotoUrls = ThumbPhotoUrls;
     }
 
-    public String getCostType() {
-        if (Reward <= 0)
-            return "没星红包";
+    public int getAnswerNum() {
+        return AnswerNum;
+    }
+
+    public void setAnswerNum(int answerNum) {
+        AnswerNum = answerNum;
+    }
+
+    public String getExpireTimeStr() {
+        return ExpireTimeStr;
+    }
+
+    public void setExpireTimeStr(String expireTimeStr) {
+        ExpireTimeStr = expireTimeStr;
+    }
+
+    public boolean isComplete() {
+        if (Status == 2 || Status == 4 || Status == 6)
+            return true;
+        return false;
+    }
+
+    public int getCostType() {
         if (Reward <= 10)
-            return "一星红包";
+            return R.drawable.icon_one_star;
         if (Reward <= 20)
-            return "二星红包";
+            return R.drawable.icon_two_star;
         if (Reward <= 30)
-            return "三星红包";
+            return R.drawable.icon_three_star;
         if (Reward <= 40)
-            return "四星红包";
+            return R.drawable.icon_four_star;
         if (Reward <= 50)
-            return "五星红包";
+            return R.drawable.icon_five_star;
         if (Reward <= 100)
-            return "大红包";
-        return String.valueOf(Reward);
+            return R.drawable.icon_big_star;
+        return R.drawable.icon_big_star;
     }
 }
