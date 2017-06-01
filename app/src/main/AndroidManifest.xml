@@ -41,6 +41,9 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="643cdd63f96412592e212d26661efdf8"/>
+        <meta-data
+            android:name="com.azging.ging.utils.CacheGlideModule"
+            android:value="GlideModule"/>
 
         <activity
             android:name=".view.MainActivity"
@@ -58,19 +61,36 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity
+            android:name=".view.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"/>
 
-        <activity android:name=".view.LoginActivity">
-        </activity>
-        <activity android:name=".view.PublishQuestionActivity">
-        </activity>
-        <activity android:name=".view.PublishSuccessActivity">
-        </activity>
-        <activity android:name=".view.UserHomeActivity">
-        </activity>
-        <activity android:name=".view.HomeListActivity">
-        </activity>
+        <activity android:name=".view.LoginActivity"/>
+
+        <activity android:name=".view.PublishQuestionActivity"/>
+
+        <activity android:name=".view.PublishSuccessActivity"/>
+
+        <activity android:name=".view.UserHomeActivity"/>
+
+        <activity android:name=".view.HomeListActivity"/>
+
         <activity android:name=".view.PermissionsActivity"/>
+
         <activity android:name=".view.QuestionDetailActivity"/>
+
+        <activity android:name=".view.ViewTourPicActivity"/>
+
+        <activity android:name=".view.PhotoAlbumActivity"/>
+
+        <activity android:name=".view.PhotoWallActivity"/>
+
+        <activity android:name=".utils.crop.CropImageActivity"/>
+
+        <activity android:name=".view.UserInfoActivity"/>
+
+
     </application>
 
 </manifest>

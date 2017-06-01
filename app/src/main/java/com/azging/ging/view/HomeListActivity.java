@@ -31,10 +31,12 @@ public class HomeListActivity extends BaseMainActivity implements IActivity {
     @BindView(R.id.header_back) ImageView mHeaderBack;
     @BindView(R.id.header_title) TextView mHeaderTitle;
     @BindView(R.id.header_more) ImageView mHeaderMore;
+    @BindView(R.id.header_complete) TextView mHeaderComplete;
     @BindView(R.id.header_view) RelativeLayout mHeaderView;
     @BindView(R.id.fragment) LinearLayout mFragment;
 
     private int mType;
+    FeedbackFragment feedbackFragment;
 
     public static void startActivity(Context context, int type) {
         Intent intent = new Intent(context, HomeListActivity.class);
@@ -51,7 +53,7 @@ public class HomeListActivity extends BaseMainActivity implements IActivity {
     public void initData() {
         mType = getIntent().getIntExtra(KEY_TYPE, 0);
 
-        mHeaderMore.setVisibility(View.INVISIBLE);
+        mHeaderMore.setVisibility(View.GONE);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -84,7 +86,9 @@ public class HomeListActivity extends BaseMainActivity implements IActivity {
                 break;
             case TYPE_FEEDBACK:
                 mHeaderTitle.setText("意见反馈");
-                FeedbackFragment feedbackFragment = (FeedbackFragment) fragmentManager.findFragmentById(R.id.fragment);
+                mHeaderComplete.setVisibility(View.VISIBLE);
+                mHeaderComplete.setText("提交");
+               feedbackFragment = (FeedbackFragment) fragmentManager.findFragmentById(R.id.fragment);
                 if (feedbackFragment == null) {
                     feedbackFragment = FeedbackFragment.startFragment();
                     transaction.add(R.id.fragment, feedbackFragment);
@@ -106,11 +110,14 @@ public class HomeListActivity extends BaseMainActivity implements IActivity {
         transaction.commit();
     }
 
-    @OnClick({R.id.header_back})
+    @OnClick({R.id.header_back,R.id.header_complete})
     void submit(View view) {
         switch (view.getId()) {
             case R.id.header_back:
                 AppManager.getAppManager().finishActivity();
+                break;
+            case R.id.header_complete:
+                feedbackFragment.submit();
                 break;
         }
     }

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <uk.co.senab.photoview.SafeViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </uk.co.senab.photoview.SafeViewPager>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_bar_height"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/left_img_area"
+            android:layout_width="@dimen/header_bar_height"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@drawable/btn_reg_bg">
+            <ImageView
+                    android:id="@+id/header_left_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:layout_gravity="left|center_vertical"
+                    android:src="@drawable/icon_back"
+                    tools:ignore="ContentDescription"/>
+
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/title"
+                style="@style/header_bar_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxWidth="200dp"
+                android:text="发约伴"
+                android:maxLines="1"/>
+
+        <LinearLayout
+            android:id="@+id/menu_img_area"
+            android:layout_width="@dimen/header_bar_height"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_reg_bg"
+            android:gravity="center"
+            android:visibility="visible" >
+
+            <ImageView
+                    android:id="@+id/menu_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/icon_more"
+                    tools:ignore="ContentDescription"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

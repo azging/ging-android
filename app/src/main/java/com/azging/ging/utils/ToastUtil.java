@@ -30,6 +30,10 @@ public class ToastUtil {
         Toast.makeText(AppManager.getAppManager().currentActivity(), info, Toast.LENGTH_LONG).show();
     }
 
+    public static void showShort(int info) {
+        Toast.makeText(AppManager.getAppManager().currentActivity(), info, Toast.LENGTH_SHORT).show();
+    }
+
     public static void showShort(String info) {
         Toast.makeText(AppManager.getAppManager().currentActivity(), info, Toast.LENGTH_SHORT).show();
     }

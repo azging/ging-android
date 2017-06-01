@@ -19,6 +19,7 @@ import com.azging.ging.base.BaseApp;
 import com.azging.ging.base.BaseMainActivity;
 import com.azging.ging.base.IActivity;
 import com.azging.ging.utils.AppManager;
+import com.azging.ging.utils.Log;
 import com.azging.ging.utils.PermissionsChecker;
 import com.azging.ging.utils.PhoneUtil;
 import com.azging.ging.utils.Utils;
@@ -140,12 +141,15 @@ public class MainActivity extends BaseMainActivity implements IActivity {
 //        } else {
 //            cookie = cookie + "110000";
 //        }
-
-        if (BaseApp.currentLocation != null) {
-            cookie.append("LocLng=").append(BaseApp.currentLocation.getLongitude()).append("; ").append("LocLat=").append(BaseApp.currentLocation.getLatitude()).append(";");
+        if (Utils.isLoggedIn()) {
+            cookie.append("UUID=").append(BaseApp.app.getCurrentUser().getUuid()).append("; ").append("CID=").append(BaseApp.app.getCurrentUser().getCid()).append("; ");
         }
 
+        if (BaseApp.currentLocation != null) {
+            cookie.append("LocLng=").append(BaseApp.currentLocation.getLongitude()).append("; ").append("LocLat=").append(BaseApp.currentLocation.getLatitude()).append("; ");
+        }
 
+        Log.e("cookie", cookie.toString());
         return cookie.toString();
     }
 

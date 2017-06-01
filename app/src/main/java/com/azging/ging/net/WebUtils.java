@@ -1,17 +1,30 @@
 package com.azging.ging.net;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.azging.ging.bean.AnswerWrapperListBean;
 import com.azging.ging.bean.AuthCodeBean;
 import com.azging.ging.bean.CreateUserWrapper;
 import com.azging.ging.bean.GingResponse;
+import com.azging.ging.bean.OrderDataBean;
 import com.azging.ging.bean.QuestionWrapper;
 import com.azging.ging.bean.QuestionWrapperListBean;
 import com.azging.ging.bean.UserBean;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UploadManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import okhttp3.Call;
+import okhttp3.Response;
+
+import static com.azging.ging.utils.Utils.Bitmap2Bytes;
 
 /**
  * Created by GG on 2017/5/19.
@@ -212,10 +225,10 @@ public class WebUtils extends WebBase {
     }
 
     /**
-     * 我的提问列表   StatusType  问题状态：0为全部，1为未解决，2为已解决
+     * 我的提问列表
      *
      * @param key
-     * @param StatusType
+     * @param StatusType 问题状态：0为全部，1为未解决，2为已解决
      * @param OrderStr
      * @param callBack
      */
@@ -229,10 +242,10 @@ public class WebUtils extends WebBase {
     }
 
     /**
-     * 我的回答列表    StatusType   回答状态：0为全部，1为被采纳获得红包
+     * 我的回答列表
      *
      * @param key
-     * @param StatusType
+     * @param StatusType 回答状态：0为全部，1为被采纳获得红包
      * @param OrderStr
      * @param callBack
      */
@@ -244,4 +257,116 @@ public class WebUtils extends WebBase {
                 .params("OrderStr", OrderStr)
                 .execute(callBack);
     }
+
+    /**
+     * 上传图片到七牛
+     *
+     * @param pic
+     * @param tag
+     * @param callBack
+     */
+
+    public void qiniuUploadPic(final Bitmap pic, final String tag, String type, final QiniuComplete callBack) {
+        StringCallback callback = new StringCallback() {
+            @Override
+            public void onSuccess(String s, Call call, Response response) {
+                try {
+                    JSONObject dataObj = new JSONObject(s);
+                    String token = dataObj.getString("UpToken");
+                    String pubkey_name = dataObj.getString("PhotoKey");
+                    byte[] uploadPic_bytes = Bitmap2Bytes(pic);
+                    qiniuUploadData(uploadPic_bytes, token, pubkey_name, tag, callBack);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    callBack.Compplete(null, null, null, tag);
+                }
+            }
+
+            @Override
+            public void onError(Call call, Response response, Exception e) {
+                super.onError(call, response, e);
+                callBack.Compplete(null, null, null, tag);
+            }
+        };
+
+
+        OkGo.post("http://duckr.cn/v6/photo/qiniu/uptoken/")
+                .params("Type", type)
+                .execute(callback);
+    }
+
+    /**
+     * 上传图片到七牛
+     *
+     * @param uploadPic_bytes
+     * @param token
+     * @param pubkey_name
+     * @param tag
+     * @param callBack
+     */
+    private void qiniuUploadData(byte[] uploadPic_bytes, String token, String pubkey_name,
+                                 final String tag, final QiniuComplete callBack) {
+        UploadManager uploadManager = new UploadManager();
+        if (uploadPic_bytes != null) {
+            uploadManager.put(uploadPic_bytes, pubkey_name,
+                    token, new UpCompletionHandler() {
+                        @Override
+                        public void complete(String key, ResponseInfo info, JSONObject response) {
+                            callBack.Compplete(key, info, response, tag);
+                        }
+                    }, null);
+        }
+    }
+
+    /**
+     * 新建订单
+     *
+     * @param quid        问题对外标识
+     * @param auid        回答对外标识
+     * @param amount      支付金额
+     * @param paymentType 付款方式：0未知，1为余额，2为微信
+     * @param tradeType   交易类型：0未知，1为提问支付，2为采纳答案，3为提现
+     * @param callBack
+     */
+    public void addOrder(String quid, String auid, double amount, int paymentType, int tradeType, JsonCallBack<GingResponse<OrderDataBean>> callBack) {
+        OkGo.post(WebUrls.getUrl(WebUrls.add_order))
+                .tag(mContext)
+                .params("Quid", quid)
+                .params("Auid", auid)
+                .params("Amount", amount)
+                .params("PaymentType", paymentType)
+                .params("TradeType", tradeType)
+                .execute(callBack);
+    }
+
+    /**
+     * 用户信息修改
+     *
+     * @param key       保存返回数据的 key
+     * @param nick      昵称
+     * @param avatarUrl 头像
+     * @param gender    性别
+     * @param callBack
+     */
+    public void userInfoUpdate(String key, String nick, String avatarUrl, int gender, JsonCallBack<GingResponse<CreateUserWrapper>> callBack) {
+        OkGo.post(WebUrls.getUrl(WebUrls.user_info_update))
+                .tag(mContext)
+                .cacheKey(key)
+                .params("Nick", nick)
+                .params("AvatarUrl", avatarUrl)
+                .params("Gender", gender)
+                .execute(callBack);
+    }
+
+    /**
+     * 提交反馈意见
+     * @param content
+     * @param callback
+     */
+    public void addFeedback(String content, StringCallback callback) {
+        OkGo.post(WebUrls.getUrl(WebUrls.add_feedback))
+                .params("content", content)
+                .execute(callback);
+    }
+
 }

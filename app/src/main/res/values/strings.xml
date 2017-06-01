@@ -68,7 +68,34 @@
 
     <string name="time_limit">剩余%1$s，已有%2$d人回答，回答被选中者可获得红包</string>
 
-    <string name="complete">已完成</string>
+    <string name="completed">已完成</string>
+    <string name="complete">完成</string>
 
     <string name="anonymity_question">匿名提问</string>
+    <string name="wallet">红包</string>
+    <string name="sdcard_not_connected">SD卡未连接</string>
+    <string name="latest_image">最近照片</string>
+    <string name="select_album">选择相册</string>
+    <string name="photo_album">相册</string>
+    <string name="confirm">确定</string>
+    <string name="no_photo_chosen">没有图片被选中</string>
+    <string name="hint">提示</string>
+    <string name="delete_pic_hint">确定要删除这张照片吗？</string>
+    <string name="login_download_pic">请登录后使用下载图片功能</string>
+    <string name="save_image_success">图片保存成功</string>
+    <string name="net_work_error">网络出现问题</string>
+    <string name="chosen_photo_invalid">所选照片无效，请检查或重新选择</string>
+    <string name="order_false">支付失败</string>
+
+    <string name="publish_success">发布成功</string>
+    <string name="picture_option">图片选项</string>
+    <string name="crop_pick_error">无可用图片</string>
+    <string name="crop__saving">载入中…</string>
+    <string name="crop__wait">请等待…</string>
+
+    <string name="crop__control">管理</string>
+    <string name="crop__done">完成</string>
+    <string name="crop__cancel">取消</string>
+    <string name="edit_nick">编辑昵称</string>
+    <string name="nick_limit">昵称不能超过10个字符</string>
 </resources>

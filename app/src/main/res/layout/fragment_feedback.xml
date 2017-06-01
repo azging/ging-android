@@ -33,7 +33,7 @@
             android:layout_below="@+id/ed_feedback"
             android:layout_margin="5dp"
             android:textSize="12sp"
-            tools:text="0/500"/>
+            android:text="0/500"/>
     </RelativeLayout>
 
 

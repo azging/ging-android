@@ -39,7 +39,6 @@
             android:cursorVisible="true"
             android:gravity="center_vertical"
             android:hint="@string/hint_publish_title"
-            android:inputType="number"
             android:textColor="@color/black"
             android:textColorHint="@color/text_gray"
             android:textCursorDrawable="@null"
@@ -87,69 +86,70 @@
 
         <LinearLayout
             android:id="@+id/add_img_view"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ed_describe"
+            android:padding="10dp"
             android:orientation="horizontal">
 
-            <RelativeLayout
-                android:id="@+id/add_img1"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_add_img">
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/add_img1"-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="60dp"-->
+                <!--android:layout_margin="5dp"-->
+                <!--android:background="@drawable/bg_add_img">-->
 
-                <ImageView
-                    android:id="@+id/img1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                <!--<ImageView-->
+                    <!--android:id="@+id/img1"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"/>-->
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/add_img"/>
-            </RelativeLayout>
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:src="@drawable/add_img"/>-->
+            <!--</RelativeLayout>-->
 
-            <RelativeLayout
-                android:id="@+id/add_img2"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_add_img"
-                >
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/add_img2"-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="60dp"-->
+                <!--android:layout_margin="5dp"-->
+                <!--android:background="@drawable/bg_add_img"-->
+                <!--&gt;-->
 
-                <ImageView
-                    android:id="@+id/img2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                <!--<ImageView-->
+                    <!--android:id="@+id/img2"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"/>-->
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/add_img"/>
-            </RelativeLayout>
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:src="@drawable/add_img"/>-->
+            <!--</RelativeLayout>-->
 
-            <RelativeLayout
-                android:id="@+id/add_img3"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_margin="5dp"
-                android:background="@drawable/bg_add_img"
-                >
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/add_img3"-->
+                <!--android:layout_width="60dp"-->
+                <!--android:layout_height="60dp"-->
+                <!--android:layout_margin="5dp"-->
+                <!--android:background="@drawable/bg_add_img"-->
+                <!--&gt;-->
 
-                <ImageView
-                    android:id="@+id/img3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                <!--<ImageView-->
+                    <!--android:id="@+id/img3"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"/>-->
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/add_img"/>
-            </RelativeLayout>
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:src="@drawable/add_img"/>-->
+            <!--</RelativeLayout>-->
         </LinearLayout>
 
 
@@ -158,12 +158,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/ed_describe"
+            android:layout_below="@+id/add_img_view"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="5dp"
             android:textColor="@color/text_gray"
             android:textSize="14sp"
-            tools:text="0/280"/>
+            android:text="0/280"/>
     </RelativeLayout>
 
     <View

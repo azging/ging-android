@@ -1,7 +1,9 @@
 package com.azging.ging.view;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,6 +22,8 @@ import com.azging.ging.utils.PrefConstants;
 import com.azging.ging.utils.SharedPreferencesHelper;
 import com.azging.ging.utils.ToastUtil;
 import com.azging.ging.utils.UIHelper;
+import com.azging.ging.utils.constants.LocalBroadcastConstants;
+import com.azging.ging.utils.constants.LocalBroadcastHelper;
 import com.lzy.okgo.callback.StringCallback;
 
 import butterknife.BindView;
@@ -45,7 +49,8 @@ public class UserHomeActivity extends BaseMainActivity implements IActivity {
 
     private UserBean userBean;
     private WebUtils webUtils;
-
+private LocalBroadcastManager localBroadcastManager;
+    private BroadcastReceiver broadcastReceiver;
 
     public static void startActivity(Context context, UserBean userBean) {
         Intent intent = new Intent(context, UserHomeActivity.class);
@@ -62,6 +67,20 @@ public class UserHomeActivity extends BaseMainActivity implements IActivity {
     public void initData() {
         webUtils = new WebUtils(this);
         userBean = (UserBean) getIntent().getSerializableExtra(KEY_USER);
+
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if (LocalBroadcastConstants.INTENT_USER_UPDATE.equals(action)) {
+                    userBean=GsonUtil.jsonToBean(intent.getStringExtra(LocalBroadcastConstants.EXTRA_RESULT),UserBean.class);
+                    wrapData();
+                }
+            }
+        };
+        LocalBroadcastHelper.registerReceiverForActions(localBroadcastManager, broadcastReceiver,
+                new String[]{LocalBroadcastConstants.INTENT_USER_UPDATE});
 
         Log.printJSON(GsonUtil.jsonToString(userBean));
 
@@ -106,7 +125,7 @@ public class UserHomeActivity extends BaseMainActivity implements IActivity {
     }
 
 
-    @OnClick({R.id.logoff})
+    @OnClick({R.id.logoff, R.id.user_view})
     void submit(View view) {
         switch (view.getId()) {
             case R.id.logoff:
@@ -119,6 +138,9 @@ public class UserHomeActivity extends BaseMainActivity implements IActivity {
                         AppManager.getAppManager().finishActivity();
                     }
                 });
+                break;
+            case R.id.user_view:
+                UserInfoActivity.startActivity(this, userBean);
                 break;
         }
     }

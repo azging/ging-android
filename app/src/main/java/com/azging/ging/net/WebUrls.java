@@ -53,4 +53,12 @@ public class WebUrls {
     //我的回答列表
     static String user_answer_list = "/api/v1/user/answer/list/";
 
+    //新建订单
+    static String add_order = "/api/v1/wallet/order/add/";
+
+    //用户信息修改
+    static String user_info_update="/api/v1/user/info/update/";
+
+    //提交反馈意见
+    static String add_feedback="/api/v1/app/feedback/add/";
 }

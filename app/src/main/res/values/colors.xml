@@ -165,4 +165,17 @@
     <color name="ging_orange2">#FF781C</color>
     <color name="text_gray">#b4b5b5</color>
     <color name="text_gray2">#888889</color>
+    <color name="process_date_gray">#f2f0ed</color>
+    <color name="image_checked_bg">#99ffffff</color>
+    <color name="yellow_background">#ffdf00</color>
+    <color name="base_desc_color">#a8a4a0</color>
+    <color name="tourpic_btn_follow_text">#7f4802</color>
+    <color name="grey_1">#f2f0ed</color>
+    <color name="btn_gray">#d9d5d1</color>
+
+
+    <color name="crop__button_bar">#f3f3f3</color>
+    <color name="crop__button_text">#666666</color>
+    <color name="crop__selector_pressed">#1a000000</color>
+    <color name="crop__selector_focused">#77000000</color>
 </resources>

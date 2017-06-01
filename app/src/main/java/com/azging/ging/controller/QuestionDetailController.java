@@ -26,7 +26,8 @@ public class QuestionDetailController extends BaseController {
     class ViewHolder {
         @BindView(R.id.user_avatar) ImageView userAvatar;
         @BindView(R.id.user_nick) TextView userNick;
-        @BindView(R.id.cost_level) TextView costLevel;
+        @BindView(R.id.cost_level_text) TextView costLevelText;
+        @BindView(R.id.cost_level_img) ImageView costLevelImg;
         @BindView(R.id.user_info) LinearLayout userInfo;
         @BindView(R.id.question_title) TextView questionTitle;
         @BindView(R.id.question_detail) TextView questionDetail;
@@ -54,7 +55,8 @@ public class QuestionDetailController extends BaseController {
         UserBean userBean = item.getCreateUserWrapper().getUser();
         ImageLoader.getInstance().displayImage(mContext, userBean.getThumbAvatarUrl(), viewHolder.userAvatar);
         viewHolder.userNick.setText(userBean.getNick());
-        viewHolder.costLevel.setText(questionBean.getCostType());
+        viewHolder.costLevelImg.setImageResource(questionBean.getCostType());
+        viewHolder.costLevelText.setText(questionBean.getCostTypeText());
         viewHolder.questionTitle.setText(questionBean.getTitle());
         viewHolder.questionDetail.setText(questionBean.getDescription());
 
@@ -67,7 +69,7 @@ public class QuestionDetailController extends BaseController {
                 ImageLoader.getInstance().displayImage(mContext, questionBean.getThumbPhotoUrls().get(2), viewHolder.questionImg3);
         }
         if (questionBean.isComplete()) {
-            viewHolder.timeLimit.setText(R.string.complete);
+            viewHolder.timeLimit.setText(R.string.completed);
             viewHolder.timeLimit.setCompoundDrawables(ContextCompat.getDrawable(mContext, R.drawable.icon_time_gray), null, null, null);
         } else {
             viewHolder.timeLimit.setText(mContext.getResources().getString(R.string.time_limit, questionBean.getExpireTimeStr(), questionBean.getAnswerNum()));

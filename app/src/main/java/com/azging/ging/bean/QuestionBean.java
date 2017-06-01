@@ -195,4 +195,19 @@ public class QuestionBean extends BaseBean {
             return R.drawable.icon_big_star;
         return R.drawable.icon_big_star;
     }
+
+    public String getCostTypeText() {
+        if (Reward <= 10)
+            return "一星红包";
+        if (Reward <= 20)
+            return "二星红包";
+        if (Reward <= 30)
+            return "三星红包";
+        if (Reward <= 40)
+            return "四星红包";
+        if (Reward <= 50)
+            return "五行红包";
+        return "大红包";
+    }
+
 }

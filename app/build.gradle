@@ -21,7 +21,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.6.0'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-    compile 'com.lzy.net:okgo:+'
+    compile 'com.lzy.net:okgo:2.1.4'
+    compile 'com.qiniu:qiniu-android-sdk:7.3.5'
     //    compile 'com.umeng.analytics:analytics:latest.integration'
 }
 

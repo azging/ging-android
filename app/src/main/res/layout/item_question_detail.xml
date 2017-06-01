@@ -30,13 +30,28 @@
             android:textSize="12sp"
             tools:text="师妹琳琳"/>
 
-        <TextView
-            android:id="@+id/cost_level"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/orange"
-            android:textSize="13sp"
-            tools:text="二星红包"/>
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/cost_level_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:src="@drawable/icon_big_star"/>
+
+            <TextView
+                android:id="@+id/cost_level_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/red"
+                android:textSize="8sp"
+                tools:text="大红包"/>
+        </LinearLayout>
+
     </LinearLayout>
 
     <TextView
@@ -92,8 +107,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:drawablePadding="5dp"
         android:drawableLeft="@drawable/icon_time"
+        android:drawablePadding="5dp"
         android:textColor="@color/ging_orange"
         android:textSize="11sp"
         tools:text="剩余28小时，已有3个人回答，回答被选中者可获得红包"/>

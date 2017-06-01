@@ -31,8 +31,10 @@
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_weight="1"
+        android:cursorVisible="true"
         android:background="@color/transparent"
         android:gravity="left"
+        android:textCursorDrawable="@null"
         android:textColor="@color/black"
         android:textSize="15sp"/>
 
