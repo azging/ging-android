@@ -10,10 +10,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,9 +23,9 @@ import android.widget.TextView;
 import com.azging.ging.R;
 import com.azging.ging.base.BaseMainActivity;
 import com.azging.ging.base.IActivity;
-import com.azging.ging.bean.PhotoUri;
 import com.azging.ging.bean.GingResponse;
 import com.azging.ging.bean.OrderDataBean;
+import com.azging.ging.bean.PhotoUri;
 import com.azging.ging.bean.QuestionBean;
 import com.azging.ging.bean.QuestionWrapper;
 import com.azging.ging.bean.WxPrepayBean;
@@ -75,7 +75,8 @@ public class PublishQuestionActivity extends BaseMainActivity implements IActivi
         Intent intent = new Intent(context, PublishQuestionActivity.class);
         context.startActivity(intent);
     }
-
+    @BindView(R.id.header_left) RelativeLayout mHeaderLeft;
+    @BindView(R.id.header_right) RelativeLayout mHeaderRight;
     @Nullable @BindView(R.id.header_back) ImageView headerBack;
     @Nullable @BindView(R.id.header_title) TextView headerTitle;
     @Nullable @BindView(R.id.header_more) ImageView headerMore;
@@ -102,6 +103,7 @@ public class PublishQuestionActivity extends BaseMainActivity implements IActivi
     private String[] mPicArr = new String[3];
     private ProgressDialogHelper mProgressDialogHelper;
     private String quid;
+    private boolean isPublish;
 
     private LocalBroadcastManager localBroadcastManager;
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -185,7 +187,7 @@ public class PublishQuestionActivity extends BaseMainActivity implements IActivi
         rewardText.setTextColor(ContextCompat.getColor(this, R.color.ging_orange));
         final ImageView rewardImg = (ImageView) rewardView.findViewById(R.id.icon_right);
         EditText rewardEdit = (EditText) rewardView.findViewById(R.id.input);
-        rewardEdit.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+        rewardEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         UIHelper.setEditTextRowData(rewardView, getResources().getString(R.string.wallet), "输入悬赏的红包", new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -224,13 +226,15 @@ public class PublishQuestionActivity extends BaseMainActivity implements IActivi
     }
 
 
-    @OnClick({R.id.header_back, R.id.publish_btn})
+    @OnClick({R.id.header_left, R.id.publish_btn})
     void submit(View view) {
         switch (view.getId()) {
-            case R.id.header_back:
+            case R.id.header_left:
                 AppManager.getAppManager().finishActivity();
                 break;
             case R.id.publish_btn:
+                mProgressDialogHelper.showProgressDialog();
+                isPublish = true;
                 uploadPics();
                 break;
         }
@@ -324,9 +328,9 @@ public class PublishQuestionActivity extends BaseMainActivity implements IActivi
         finishUploadCount = 0;
 
         if (imagePathList.size() > 0) {
-            for (int i = 0; i < imagePathList.size() && i < 9; i++) {
+            for (int i = 0; i < imagePathList.size() && i < 3; i++) {
                 if (imagePathList.get(i).getType() == 1 || imagePathList.get(i).getType() == 2) {
-                    mProgressDialogHelper.showProgressDialog();
+//                    mProgressDialogHelper.showProgressDialog();
                     final int finalI = i;
                     Glide.with(this).load(imagePathList.get(i).getUriStr()).asBitmap().into(new SimpleTarget<Bitmap>() {
                         @Override
@@ -360,7 +364,7 @@ public class PublishQuestionActivity extends BaseMainActivity implements IActivi
                                                     mPicArr[tagIndex] = uploadedUrl;
                                                     imagePathList.get(tagIndex).setType(2);
                                                     imagePathList.get(tagIndex).setUriStr(uploadedUrl);
-                                                    if (finishUploadCount == imagePathList.size()) {
+                                                    if (finishUploadCount == imagePathList.size() && isPublish) {
                                                         mProgressDialogHelper.hideProgressDialog();
                                                         submitTourPic();
                                                     }
@@ -373,7 +377,7 @@ public class PublishQuestionActivity extends BaseMainActivity implements IActivi
                     });
                 } else {
                     finishUploadCount++;
-                    if (finishUploadCount == imagePathList.size()) {
+                    if (finishUploadCount == imagePathList.size() && isPublish) {
                         mProgressDialogHelper.hideProgressDialog();
                         submitTourPic();
                     }
@@ -384,7 +388,7 @@ public class PublishQuestionActivity extends BaseMainActivity implements IActivi
 
 
     private void submitTourPic() {
-        mProgressDialogHelper.showSubmitProgressDialog();
+//        mProgressDialogHelper.showSubmitProgressDialog();
         List<String> picList = new ArrayList<>();
         for (int i = 0; i < mPicArr.length; i++) {
             if (mPicArr[i] != null && !mPicArr[i].isEmpty()) {

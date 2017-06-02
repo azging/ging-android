@@ -9,15 +9,21 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/header_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:id="@+id/header_left"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:src="@drawable/icon_back"
-        />
+        android:paddingLeft="10dp">
+
+        <ImageView
+            android:id="@+id/header_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/icon_back"/>
+    </RelativeLayout>
+
 
     <TextView
         android:id="@+id/header_title"
@@ -28,25 +34,29 @@
         android:textSize="15sp"
         tools:text="登录"/>
 
-    <ImageView
-        android:id="@+id/header_more"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:src="@drawable/icon_user"
-        />
+    <RelativeLayout
+        android:id="@+id/header_right"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true">
 
-    <TextView
-        android:id="@+id/header_complete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:text="@string/complete"
-        android:visibility="gone"
-        android:textColor="@color/ging_orange"
-        android:textSize="14sp"/>
+        <ImageView
+            android:id="@+id/header_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/icon_user"
+            />
+
+        <TextView
+            android:id="@+id/header_complete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/complete"
+            android:textColor="@color/ging_orange"
+            android:textSize="14sp"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
 </RelativeLayout>

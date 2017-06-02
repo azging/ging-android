@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
-    <uk.co.senab.photoview.SafeViewPager
+    <com.azging.ging.customui.photoview.SafeViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </uk.co.senab.photoview.SafeViewPager>
+    </com.azging.ging.customui.photoview.SafeViewPager>
 
     <LinearLayout
         android:layout_width="match_parent"

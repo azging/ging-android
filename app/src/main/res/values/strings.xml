@@ -98,4 +98,6 @@
     <string name="crop__cancel">取消</string>
     <string name="edit_nick">编辑昵称</string>
     <string name="nick_limit">昵称不能超过10个字符</string>
+    <string name="input_hint">请输入回答</string>
+    <string name="content_not_null">内容不能为空</string>
 </resources>

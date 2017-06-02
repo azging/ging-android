@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -26,6 +25,7 @@ import android.widget.TextView;
 import com.azging.ging.R;
 import com.azging.ging.base.BaseApp;
 import com.azging.ging.base.BaseMainActivity;
+import com.azging.ging.base.IActivity;
 import com.azging.ging.bean.UserBean;
 import com.azging.ging.customui.photoview.PhotoView;
 import com.azging.ging.customui.photoview.PhotoViewAttacher;
@@ -45,7 +45,7 @@ import java.util.Arrays;
  * Created by GG on 2017/5/31.
  */
 
-public class ViewTourPicActivity extends BaseMainActivity {
+public class ViewTourPicActivity extends BaseMainActivity implements IActivity{
 
     public static final String KEY_PATH = "path";
     public static final String KEY_ENABLE_DELETE = "enable_delete";
@@ -88,37 +88,6 @@ public class ViewTourPicActivity extends BaseMainActivity {
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        Intent intent = getIntent();
-        if (intent == null) {
-            finish();
-            return;
-        }
-        mContext = this;
-        mHandler = new Handler();
-        mImagePath = intent.getStringExtra(KEY_PATH);
-        mImageList = intent.getStringArrayExtra(KEY_IMG_LIST);
-        mType = intent.getStringExtra(KEY_TYPE);
-        if (mImageList == null) {
-            if (mImagePath == null) {
-                finish();
-                return;
-            }
-            mImageList = new String[]{mImagePath};
-        }
-        downloadStatus = new boolean[mImageList.length];
-        Arrays.fill(downloadStatus, false);
-        mIndex = intent.getIntExtra(KEY_INDEX, 0);
-        enableDelete = intent.getBooleanExtra(KEY_ENABLE_DELETE, false);
-        enableSave = intent.getBooleanExtra(KEY_ENABLE_SAVE, false);
-        localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
-        setContentView(R.layout.activity_view_tour_pic);
-        setupViews();
-    }
 
     private void setupViews() {
         mTitleView = (TextView) findViewById(R.id.title);
@@ -281,6 +250,41 @@ public class ViewTourPicActivity extends BaseMainActivity {
                 });
         //启动图片下载线程
         new Thread(service).start();
+    }
+
+    @Override
+    public int initView() {
+        return R.layout.activity_view_tour_pic;
+    }
+
+    @Override
+    public void initData() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Intent intent = getIntent();
+        if (intent == null) {
+            finish();
+            return;
+        }
+        mContext = this;
+        mHandler = new Handler();
+        mImagePath = intent.getStringExtra(KEY_PATH);
+        mImageList = intent.getStringArrayExtra(KEY_IMG_LIST);
+        mType = intent.getStringExtra(KEY_TYPE);
+        if (mImageList == null) {
+            if (mImagePath == null) {
+                finish();
+                return;
+            }
+            mImageList = new String[]{mImagePath};
+        }
+        downloadStatus = new boolean[mImageList.length];
+        Arrays.fill(downloadStatus, false);
+        mIndex = intent.getIntExtra(KEY_INDEX, 0);
+        enableDelete = intent.getBooleanExtra(KEY_ENABLE_DELETE, false);
+        enableSave = intent.getBooleanExtra(KEY_ENABLE_SAVE, false);
+        localBroadcastManager = LocalBroadcastManager.getInstance(mContext);
+        setupViews();
     }
 
 

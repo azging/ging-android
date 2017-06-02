@@ -147,6 +147,8 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
 
         UMShareAPI.get(this);
 
+
+
         Log.i("", "onCreate: ");
         initLocation();
 
@@ -167,7 +169,7 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
 
 
     {
-        PlatformConfig.setWeixin("", "");
+        PlatformConfig.setWeixin("wx44d1d7ca25302f9d", "90a8a9d411282c10d502766360093f8f");
     }
 
 

@@ -3,11 +3,10 @@ package com.azging.ging.controller;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.azging.ging.R;
-import com.azging.ging.bean.ActivityBean;
 import com.azging.ging.bean.AnswerBean;
 import com.azging.ging.bean.AnswerWrapper;
 import com.azging.ging.bean.UserBean;
@@ -27,8 +26,8 @@ public class AnswerDetailController extends BaseController {
 
         @BindView(R.id.user_avatar) ImageView userAvatar;
         @BindView(R.id.user_nick) TextView userNick;
-        @BindView(R.id.cost_level) TextView costLevel;
-        @BindView(R.id.user_info) LinearLayout userInfo;
+        @BindView(R.id.user_gender) ImageView userGender;
+        @BindView(R.id.user_info) RelativeLayout userInfo;
         @BindView(R.id.answer_detail) TextView answerDetail;
         @BindView(R.id.answer_time) TextView answerTime;
 
@@ -50,6 +49,7 @@ public class AnswerDetailController extends BaseController {
         UserBean userBean = item.getCreateUserWrapper().getUser();
         ImageLoader.getInstance().displayImage(mContext, userBean.getThumbAvatarUrl(), viewHolder.userAvatar);
         viewHolder.userNick.setText(userBean.getNick());
+        viewHolder.userGender.setImageResource(userBean.getGenderIcon());
 
         viewHolder.answerDetail.setText(answerBean.getContent());
         viewHolder.answerTime.setText(DateUtils.convertTimestamp(answerBean.getUpdateTime()));

@@ -3,11 +3,13 @@ package com.azging.ging.net;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import com.azging.ging.bean.AnswerWrapper;
 import com.azging.ging.bean.AnswerWrapperListBean;
 import com.azging.ging.bean.AuthCodeBean;
 import com.azging.ging.bean.CreateUserWrapper;
 import com.azging.ging.bean.GingResponse;
 import com.azging.ging.bean.OrderDataBean;
+import com.azging.ging.bean.QiniuTokenBean;
 import com.azging.ging.bean.QuestionWrapper;
 import com.azging.ging.bean.QuestionWrapperListBean;
 import com.azging.ging.bean.UserBean;
@@ -18,7 +20,6 @@ import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import okhttp3.Call;
@@ -267,19 +268,20 @@ public class WebUtils extends WebBase {
      */
 
     public void qiniuUploadPic(final Bitmap pic, final String tag, String type, final QiniuComplete callBack) {
-        StringCallback callback = new StringCallback() {
+        JsonCallBack<GingResponse<QiniuTokenBean>> callback = new JsonCallBack<GingResponse<QiniuTokenBean>>() {
             @Override
-            public void onSuccess(String s, Call call, Response response) {
-                try {
-                    JSONObject dataObj = new JSONObject(s);
-                    String token = dataObj.getString("UpToken");
-                    String pubkey_name = dataObj.getString("PhotoKey");
-                    byte[] uploadPic_bytes = Bitmap2Bytes(pic);
-                    qiniuUploadData(uploadPic_bytes, token, pubkey_name, tag, callBack);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    callBack.Compplete(null, null, null, tag);
-                }
+            public void onSuccess(GingResponse<QiniuTokenBean> qiniuTokenBeanGingResponse, Call call, Response response) {
+                super.onSuccess(qiniuTokenBeanGingResponse, call, response);
+//                    JSONObject dataObj = new JSONObject(s);
+//                    Log.e("sssss", s);
+//                    String token = dataObj.optString("UpToken");
+//                    String pubkey_name = dataObj.optString("PhotoKey");
+                String token = qiniuTokenBeanGingResponse.Data.getUpToken();
+                String pubkey_name = qiniuTokenBeanGingResponse.Data.getPhotoKey();
+
+
+                byte[] uploadPic_bytes = Bitmap2Bytes(pic);
+                qiniuUploadData(uploadPic_bytes, token, pubkey_name, tag, callBack);
             }
 
             @Override
@@ -290,7 +292,31 @@ public class WebUtils extends WebBase {
         };
 
 
-        OkGo.post("http://duckr.cn/v6/photo/qiniu/uptoken/")
+//        StringCallback callback = new StringCallback() {
+//            @Override
+//            public void onSuccess(String s, Call call, Response response) {
+//                try {
+//                    JSONObject dataObj = new JSONObject(s);
+//                    Log.e("sssss", s);
+//                    String token = dataObj.optString("UpToken");
+//                    String pubkey_name = dataObj.optString("PhotoKey");
+//                    byte[] uploadPic_bytes = Bitmap2Bytes(pic);
+//                    qiniuUploadData(uploadPic_bytes, token, pubkey_name, tag, callBack);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                    callBack.Compplete(null, null, null, tag);
+//                }
+//            }
+//
+//            @Override
+//            public void onError(Call call, Response response, Exception e) {
+//                super.onError(call, response, e);
+//                callBack.Compplete(null, null, null, tag);
+//            }
+//        };
+
+
+        OkGo.post(WebUrls.getUrl(WebUrls.qiniu_uptoken))
                 .params("Type", type)
                 .execute(callback);
     }
@@ -360,6 +386,7 @@ public class WebUtils extends WebBase {
 
     /**
      * 提交反馈意见
+     *
      * @param content
      * @param callback
      */
@@ -367,6 +394,25 @@ public class WebUtils extends WebBase {
         OkGo.post(WebUrls.getUrl(WebUrls.add_feedback))
                 .params("content", content)
                 .execute(callback);
+    }
+
+    /**
+     * 添加答案
+     *
+     * @param key
+     * @param quid     问题唯一标识
+     * @param content  回答的内容
+     * @param type     0为文字回答
+     * @param callBack
+     */
+    public void addAnswer(String key, String quid, String content, int type, JsonCallBack<GingResponse<AnswerWrapper>> callBack) {
+        OkGo.post(WebUrls.getUrl(WebUrls.add_answer))
+                .tag(mContext)
+                .cacheKey(key)
+                .params("Quid", quid)
+                .params("Content", content)
+                .params("Type", type)
+                .execute(callBack);
     }
 
 }

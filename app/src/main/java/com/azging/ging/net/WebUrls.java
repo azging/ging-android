@@ -61,4 +61,10 @@ public class WebUrls {
 
     //提交反馈意见
     static String add_feedback="/api/v1/app/feedback/add/";
+
+    //获取七牛上传的 token
+    static String qiniu_uptoken="/api/v1/util/qiniu/uptoken/";
+
+    //添加回答
+    static String add_answer="/api/v1/question/answer/add/";
 }

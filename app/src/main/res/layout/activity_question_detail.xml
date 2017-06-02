@@ -20,8 +20,18 @@
         android:id="@+id/answer_question_btn"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_margin="5dp"
+        android:background="@color/ging_orange"
+        android:textColor="@color/white"
         android:gravity="center"
         android:text="@string/answer_question_btn"
-        android:background="@color/slateblue"
-        android:textSize="14sp"/>
+        android:textStyle="bold"
+        android:textSize="15sp"/>
+
+    <include
+        android:id="@+id/plan_free_add_comment_view"
+        layout="@layout/include_add_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 </LinearLayout>

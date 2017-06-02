@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.azging.ging.R;
@@ -38,7 +38,8 @@ public class UserHomeActivity extends BaseMainActivity implements IActivity {
 
     @BindView(R.id.user_avatar) ImageView userAvatar;
     @BindView(R.id.user_nick) TextView userNick;
-    @BindView(R.id.user_view) LinearLayout userView;
+    @BindView(R.id.user_gender) ImageView userGender;
+    @BindView(R.id.user_view) RelativeLayout userView;
     @BindView(R.id.logoff) TextView logoff;
     @BindView(R.id.my_question) View myQuestion;
     @BindView(R.id.my_answer) View myAnswer;
@@ -49,7 +50,7 @@ public class UserHomeActivity extends BaseMainActivity implements IActivity {
 
     private UserBean userBean;
     private WebUtils webUtils;
-private LocalBroadcastManager localBroadcastManager;
+    private LocalBroadcastManager localBroadcastManager;
     private BroadcastReceiver broadcastReceiver;
 
     public static void startActivity(Context context, UserBean userBean) {
@@ -74,7 +75,7 @@ private LocalBroadcastManager localBroadcastManager;
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
                 if (LocalBroadcastConstants.INTENT_USER_UPDATE.equals(action)) {
-                    userBean=GsonUtil.jsonToBean(intent.getStringExtra(LocalBroadcastConstants.EXTRA_RESULT),UserBean.class);
+                    userBean = GsonUtil.jsonToBean(intent.getStringExtra(LocalBroadcastConstants.EXTRA_RESULT), UserBean.class);
                     wrapData();
                 }
             }
@@ -120,8 +121,9 @@ private LocalBroadcastManager localBroadcastManager;
     }
 
     private void wrapData() {
-        ImageLoader.getInstance().displayImage(this, userBean.getThumbAvatarUrl(), userAvatar);
+        ImageLoader.getInstance().displayImage(getApplicationContext(), userBean.getThumbAvatarUrl(), userAvatar);
         userNick.setText(userBean.getNick());
+        userGender.setImageResource(userBean.getGenderIcon());
     }
 
 

@@ -28,6 +28,8 @@ public class HomeListActivity extends BaseMainActivity implements IActivity {
     public static final int TYPE_WALLET = 3;
     public static final int TYPE_FEEDBACK = 4;
     public static final int TYPE_ABOUT_US = 5;
+    @BindView(R.id.header_left) RelativeLayout mHeaderLeft;
+    @BindView(R.id.header_right) RelativeLayout mHeaderRight;
     @BindView(R.id.header_back) ImageView mHeaderBack;
     @BindView(R.id.header_title) TextView mHeaderTitle;
     @BindView(R.id.header_more) ImageView mHeaderMore;
@@ -110,10 +112,10 @@ public class HomeListActivity extends BaseMainActivity implements IActivity {
         transaction.commit();
     }
 
-    @OnClick({R.id.header_back,R.id.header_complete})
+    @OnClick({R.id.header_left,R.id.header_complete})
     void submit(View view) {
         switch (view.getId()) {
-            case R.id.header_back:
+            case R.id.header_left:
                 AppManager.getAppManager().finishActivity();
                 break;
             case R.id.header_complete:

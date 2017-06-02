@@ -8,11 +8,11 @@
     tools:context="com.azging.ging.view.UserHomeActivity">
 
     <!--<include layout="@layout/header_title"/>-->
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/user_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
+        android:background="@color/ging_orange"
         android:orientation="horizontal"
         android:padding="20dp">
 
@@ -20,22 +20,35 @@
             android:id="@+id/user_avatar"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_centerVertical="true"
             android:src="@mipmap/ic_launcher_round"/>
 
         <TextView
             android:id="@+id/user_nick"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:textColor="@color/black"
+            android:layout_toRightOf="@+id/user_avatar"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
             android:textSize="14sp"
             tools:text="Mr.Positive"/>
+        <ImageView
+            android:id="@+id/user_gender"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/user_nick"
+            tools:src="@drawable/icon_boy"/>
 
         <ImageView
             android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:src="@drawable/ic_next"/>
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <LinearLayout

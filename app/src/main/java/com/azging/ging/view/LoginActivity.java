@@ -99,7 +99,8 @@ public class LoginActivity extends BaseMainActivity implements IActivity {
                 });
                 break;
             case R.id.weixin_login:
-                UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.WEIXIN, umAuthListener);
+                ToastUtil.showShort("weixin");
+                UMShareAPI.get(this).doOauthVerify(this, SHARE_MEDIA.WEIXIN, umAuthListener);
                 break;
         }
     }
@@ -112,7 +113,7 @@ public class LoginActivity extends BaseMainActivity implements IActivity {
 
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-            ToastUtil.showLong("授权成功");
+            ToastUtil.showShort("授权成功");
             Log.printMap(data);
             webUtils.wxLogin("WXLogin", data.get("uid"), data.get("name"), data.get("iconurl"), getGender(data.get("gender")), new JsonCallBack<GingResponse<UserBean>>() {
                 @Override
@@ -128,14 +129,20 @@ public class LoginActivity extends BaseMainActivity implements IActivity {
 
         @Override
         public void onError(SHARE_MEDIA platform, int action, Throwable t) {
-            ToastUtil.showLong("授权失败");
+            ToastUtil.showShort("授权失败");
         }
 
         @Override
         public void onCancel(SHARE_MEDIA platform, int action) {
-            ToastUtil.showLong("取消授权");
+            ToastUtil.showShort("取消授权");
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
 
     public int getGender(String gender) {
         if ("男".equals(gender))

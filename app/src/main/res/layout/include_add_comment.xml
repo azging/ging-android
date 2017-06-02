@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/add_comment_content_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:minHeight="50dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:visibility="gone">
+
+    <EditText
+        android:id="@+id/add_comment_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="47dp"
+        android:background="@drawable/bg_chat_input"
+        android:ems="10"
+        android:hint="@string/input_hint"
+        android:imeOptions="flagNoExtractUi|actionSend"
+        android:inputType="textShortMessage|textMultiLine|textCapSentences"
+        android:minHeight="35dp"
+        android:minLines="1"
+        android:paddingBottom="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp"
+        android:textColor="@color/primarytext"
+        android:textSize="14sp"/>
+
+    <!-- <requestFocus /> -->
+
+    <ImageView
+        android:id="@+id/add_comment_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="7dp"
+        android:src="@drawable/chat_submit"
+        tools:ignore="ContentDescription"/>
+
+</RelativeLayout>

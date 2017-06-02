@@ -34,8 +34,8 @@ import butterknife.OnClick;
 
 public class MainActivity extends BaseMainActivity implements IActivity {
     private static final int REQUEST_CODE = 0; // 请求码
-
     private PermissionsChecker mPermissionsChecker; // 权限检测器
+
     // 所需的全部权限
     static final String[] PERMISSIONS = new String[]{
             Manifest.permission.READ_PHONE_STATE,
@@ -43,6 +43,8 @@ public class MainActivity extends BaseMainActivity implements IActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
     };
 
+    @BindView(R.id.header_left) RelativeLayout mHeaderLeft;
+    @BindView(R.id.header_right) RelativeLayout mHeaderRight;
     @BindView(R.id.header_back) ImageView headerBack;
     @BindView(R.id.header_title) TextView headerTitle;
     @BindView(R.id.header_more) ImageView headerMore;
@@ -95,10 +97,10 @@ public class MainActivity extends BaseMainActivity implements IActivity {
     }
 
 
-    @OnClick({R.id.header_more, R.id.publish_question})
+    @OnClick({R.id.header_right, R.id.publish_question})
     void submit(View view) {
         switch (view.getId()) {
-            case R.id.header_more:
+            case R.id.header_right:
                 if (Utils.isLoggedIn())
                     UserHomeActivity.startActivity(this, BaseApp.app.getCurrentUser());
                 else

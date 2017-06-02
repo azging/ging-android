@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.azging.ging.R;
@@ -26,9 +26,10 @@ public class QuestionDetailController extends BaseController {
     class ViewHolder {
         @BindView(R.id.user_avatar) ImageView userAvatar;
         @BindView(R.id.user_nick) TextView userNick;
+        @BindView(R.id.user_gender) ImageView userGender;
         @BindView(R.id.cost_level_text) TextView costLevelText;
         @BindView(R.id.cost_level_img) ImageView costLevelImg;
-        @BindView(R.id.user_info) LinearLayout userInfo;
+        @BindView(R.id.user_info) RelativeLayout userInfo;
         @BindView(R.id.question_title) TextView questionTitle;
         @BindView(R.id.question_detail) TextView questionDetail;
         @BindView(R.id.question_img1) ImageView questionImg1;
@@ -59,6 +60,8 @@ public class QuestionDetailController extends BaseController {
         viewHolder.costLevelText.setText(questionBean.getCostTypeText());
         viewHolder.questionTitle.setText(questionBean.getTitle());
         viewHolder.questionDetail.setText(questionBean.getDescription());
+
+        viewHolder.userGender.setImageResource(userBean.getGenderIcon());
 
         if (questionBean.getThumbPhotoUrls() != null) {
             if (questionBean.getThumbPhotoUrls().size() > 0)
