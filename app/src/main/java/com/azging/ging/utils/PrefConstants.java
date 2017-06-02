@@ -14,6 +14,8 @@ public class PrefConstants {
 
     public static final String KEY_CURRENT_USER = "current_user";
 
+    public static final String KEY_BALANCE = "BALANCE";
+
 
     public static final int REQUEST_TAKE_PICTURE = 0x000100;
     public static final long MIN_IMAGE_SIZE = 100;

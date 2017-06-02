@@ -67,4 +67,10 @@ public class WebUrls {
 
     //添加回答
     static String add_answer="/api/v1/question/answer/add/";
+
+    //挑选最佳答案
+    static String adopt_answer="/api/v1/question/answer/adopt/";
+
+    //获取用户余额  get
+    static String balance="/api/v1/wallet/balance/";
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="126dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/user_avatar"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            tools:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:id="@+id/user_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/user_avatar"
+            android:gravity="center_vertical"
+            tools:text="Miss R"
+            android:textColor="@color/black"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/user_coins_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="33dp"
+            android:textColor="@color/ging_orange"
+            android:textSize="43sp"
+            tools:text="32"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/user_coins_number"
+            android:layout_centerHorizontal="true"
+            android:text="我的余额"
+            android:textColor="@color/tourpic_btn_follow_text"
+            android:textSize="15sp"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/withdraws_cash"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/ging_orange"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:text="提现"
+        android:textColor="@color/white"
+        android:textSize="15sp"/>
+</RelativeLayout>

@@ -7,12 +7,12 @@ import android.widget.TextView;
 
 import com.azging.ging.R;
 import com.azging.ging.base.BaseFragment;
+import com.azging.ging.bean.GingResponse;
+import com.azging.ging.bean.IsPassBean;
+import com.azging.ging.net.JsonCallBack;
 import com.azging.ging.net.WebUtils;
+import com.azging.ging.utils.AppManager;
 import com.azging.ging.utils.ToastUtil;
-import com.lzy.okgo.callback.StringCallback;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import butterknife.BindView;
 import okhttp3.Call;
@@ -63,19 +63,14 @@ public class FeedbackFragment extends BaseFragment {
     }
 
     public void submit() {
-        mWebUtils.addFeedback(feedbackText, new StringCallback() {
+        mWebUtils.addFeedback(feedbackText, new JsonCallBack<GingResponse<IsPassBean>>() {
             @Override
-            public void onSuccess(String s, Call call, Response response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    if (jsonObject.optBoolean("IsPass"))
-                        ToastUtil.showShort("提交成功");
-                    else
-                        ToastUtil.showLong("提交失败");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+            public void onSuccess(GingResponse<IsPassBean> gingResponse, Call call, Response response) {
+                if (gingResponse.Data.isIsPass())
+                    ToastUtil.showShort("提交成功");
+                else
+                    ToastUtil.showLong("提交失败");
+                AppManager.getAppManager().finishActivity();
             }
         });
     }

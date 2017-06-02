@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.azging.ging.R;
+import com.azging.ging.base.BaseApp;
 import com.azging.ging.base.BaseMainActivity;
 import com.azging.ging.base.IActivity;
 import com.azging.ging.utils.AppManager;
@@ -85,12 +86,20 @@ public class HomeListActivity extends BaseMainActivity implements IActivity {
                 break;
             case TYPE_WALLET:
                 mHeaderTitle.setText("我的红包");
+                WalletFragment walletFragment = (WalletFragment) fragmentManager.findFragmentById(R.id.fragment);
+                if (walletFragment == null) {
+                    walletFragment = WalletFragment.startFragment(BaseApp.app.getCurrentUser());
+                    transaction.add(R.id.fragment, walletFragment);
+                } else {
+                    transaction.add(R.id.fragment, walletFragment);
+                }
+
                 break;
             case TYPE_FEEDBACK:
                 mHeaderTitle.setText("意见反馈");
                 mHeaderComplete.setVisibility(View.VISIBLE);
                 mHeaderComplete.setText("提交");
-               feedbackFragment = (FeedbackFragment) fragmentManager.findFragmentById(R.id.fragment);
+                feedbackFragment = (FeedbackFragment) fragmentManager.findFragmentById(R.id.fragment);
                 if (feedbackFragment == null) {
                     feedbackFragment = FeedbackFragment.startFragment();
                     transaction.add(R.id.fragment, feedbackFragment);
@@ -112,13 +121,13 @@ public class HomeListActivity extends BaseMainActivity implements IActivity {
         transaction.commit();
     }
 
-    @OnClick({R.id.header_left,R.id.header_complete})
+    @OnClick({R.id.header_left, R.id.header_right})
     void submit(View view) {
         switch (view.getId()) {
             case R.id.header_left:
                 AppManager.getAppManager().finishActivity();
                 break;
-            case R.id.header_complete:
+            case R.id.header_right:
                 feedbackFragment.submit();
                 break;
         }

@@ -21,11 +21,13 @@ import android.widget.TextView;
 
 import com.azging.ging.R;
 import com.azging.ging.adapter.AnswerAdapter;
+import com.azging.ging.base.BaseApp;
 import com.azging.ging.base.BaseMainActivity;
 import com.azging.ging.base.IActivity;
 import com.azging.ging.bean.AnswerWrapper;
 import com.azging.ging.bean.AnswerWrapperListBean;
 import com.azging.ging.bean.GingResponse;
+import com.azging.ging.bean.IsPassBean;
 import com.azging.ging.bean.QuestionWrapper;
 import com.azging.ging.controller.QuestionDetailController;
 import com.azging.ging.customui.DividerDecoration;
@@ -242,6 +244,19 @@ public class QuestionDetailActivity extends BaseMainActivity implements IActivit
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(final BaseQuickAdapter adapter, final View view, final int position) {
+                if (questionWrapper.getCreateUserWrapper().getUser().getUuid().equals(BaseApp.app.getCurrentUser().getUuid())) {// 点击的是发布人
+                    webUtils.adoptAnswer(TAG, questionWrapper.getQuestion().getQuid(),
+                            ((AnswerWrapper) adapter.getData().get(position)).getAnswer().getAuid(), new JsonCallBack<GingResponse<IsPassBean>>() {
+                                @Override
+                                public void onSuccess(GingResponse<IsPassBean> gingResponse, Call call, Response response) {
+                                    super.onSuccess(gingResponse, call, response);
+                                    if (gingResponse.Data.isIsPass())
+                                        ToastUtil.showShort(QuestionDetailActivity.this, "挑选最佳答案成功");
+                                    else
+                                        ToastUtil.showShort(QuestionDetailActivity.this, "挑选最佳答案失败");
+                                }
+                            });
+                }
             }
         });
     }

@@ -6,8 +6,10 @@ import android.graphics.Bitmap;
 import com.azging.ging.bean.AnswerWrapper;
 import com.azging.ging.bean.AnswerWrapperListBean;
 import com.azging.ging.bean.AuthCodeBean;
+import com.azging.ging.bean.BalanceBean;
 import com.azging.ging.bean.CreateUserWrapper;
 import com.azging.ging.bean.GingResponse;
+import com.azging.ging.bean.IsPassBean;
 import com.azging.ging.bean.OrderDataBean;
 import com.azging.ging.bean.QiniuTokenBean;
 import com.azging.ging.bean.QuestionWrapper;
@@ -390,9 +392,9 @@ public class WebUtils extends WebBase {
      * @param content
      * @param callback
      */
-    public void addFeedback(String content, StringCallback callback) {
+    public void addFeedback(String content, JsonCallBack<GingResponse<IsPassBean>> callback) {
         OkGo.post(WebUrls.getUrl(WebUrls.add_feedback))
-                .params("content", content)
+                .params("Content", content)
                 .execute(callback);
     }
 
@@ -415,4 +417,30 @@ public class WebUtils extends WebBase {
                 .execute(callBack);
     }
 
+    /**
+     * 挑选最佳答案
+     *
+     * @param key
+     * @param quid     问题唯一标识
+     * @param auid     回答唯一标识
+     * @param callBack
+     */
+    public void adoptAnswer(String key, String quid, String auid, JsonCallBack<GingResponse<IsPassBean>> callBack) {
+        OkGo.post(WebUrls.getUrl(WebUrls.adopt_answer))
+                .tag(mContext)
+                .cacheKey(key)
+                .params("Quid", quid)
+                .params("Auid", auid)
+                .execute(callBack);
+    }
+
+    /**
+     * 获取用户余额
+     *
+     * @param callBack
+     */
+    public void balance(JsonCallBack<GingResponse<BalanceBean>> callBack) {
+        OkGo.get(WebUrls.getUrl(WebUrls.balance))
+                .execute(callBack);
+    }
 }

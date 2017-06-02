@@ -21,7 +21,7 @@ public class AnswerBean extends BaseBean {
     @SerializedName("Auid") private String Auid;
     @SerializedName("Type") private int Type;
     @SerializedName("Content") private String Content;
-    @SerializedName("Status") private int Status;
+    @SerializedName("Status") private int Status;   //0是普通回答   1 是 被采纳  2是 被采纳 也被发红包了的
     @SerializedName("PayStatus") private int PayStatus;
     @SerializedName("CreateTime") private String CreateTime;
     @SerializedName("UpdateTime") private String UpdateTime;
