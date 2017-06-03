@@ -1,6 +1,7 @@
 package com.azging.ging.view;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -245,17 +246,29 @@ public class QuestionDetailActivity extends BaseMainActivity implements IActivit
             @Override
             public void onSimpleItemClick(final BaseQuickAdapter adapter, final View view, final int position) {
                 if (questionWrapper.getCreateUserWrapper().getUser().getUuid().equals(BaseApp.app.getCurrentUser().getUuid())) {// 点击的是发布人
-                    webUtils.adoptAnswer(TAG, questionWrapper.getQuestion().getQuid(),
-                            ((AnswerWrapper) adapter.getData().get(position)).getAnswer().getAuid(), new JsonCallBack<GingResponse<IsPassBean>>() {
-                                @Override
-                                public void onSuccess(GingResponse<IsPassBean> gingResponse, Call call, Response response) {
-                                    super.onSuccess(gingResponse, call, response);
-                                    if (gingResponse.Data.isIsPass())
-                                        ToastUtil.showShort(QuestionDetailActivity.this, "挑选最佳答案成功");
-                                    else
-                                        ToastUtil.showShort(QuestionDetailActivity.this, "挑选最佳答案失败");
-                                }
-                            });
+                    Utils.showConfirmCancelHintDialog(QuestionDetailActivity.this, "是否选择此答案为最佳答案", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            webUtils.adoptAnswer(TAG, questionWrapper.getQuestion().getQuid(),
+                                    ((AnswerWrapper) adapter.getData().get(position)).getAnswer().getAuid(), new JsonCallBack<GingResponse<IsPassBean>>() {
+                                        @Override
+                                        public void onSuccess(GingResponse<IsPassBean> gingResponse, Call call, Response response) {
+                                            super.onSuccess(gingResponse, call, response);
+                                            if (gingResponse.Data.isIsPass())
+                                                ToastUtil.showShort(QuestionDetailActivity.this, "挑选最佳答案成功");
+                                            else
+                                                ToastUtil.showShort(QuestionDetailActivity.this, "挑选最佳答案失败");
+                                        }
+                                    });
+                        }
+                    }, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+
                 }
             }
         });
