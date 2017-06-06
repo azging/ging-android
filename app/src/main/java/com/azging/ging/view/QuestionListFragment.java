@@ -2,6 +2,7 @@ package com.azging.ging.view;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -95,7 +96,7 @@ public class QuestionListFragment extends BaseFragment implements BaseQuickAdapt
 
         DividerDecoration dividerDecoration = new DividerDecoration(getActivity());
         dividerDecoration.setDividerHeightDip(5);
-        dividerDecoration.setDividerColor(context.getResources().getColor(R.color.gray));
+        dividerDecoration.setDividerColor(ContextCompat.getColor(context, R.color.ging_gray));
         mRecyclerView.addItemDecoration(dividerDecoration);
 
 

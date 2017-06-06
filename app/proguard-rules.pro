@@ -24,6 +24,24 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+
+ #保持 Serializable 不被混淆
+-keepnames class * implements java.io.Serializable
+
+#保持 Serializable 不被混淆并且enum 类也不被混淆
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    !static !transient <fields>;
+    !private <fields>;
+    !private <methods>;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
+
+
 -keepclassmembers class * {
    public <init> (org.json.JSONObject);
 }
@@ -94,6 +112,10 @@
 
 }
 
+-keep class com.tencent.wxop.** {
+   *;
+}
+
 -keep class com.tencent.** {*;}
 -dontwarn com.tencent.**
 -keep public class com.umeng.com.umeng.soexample.R$*{
@@ -122,5 +144,58 @@ public static final ** CREATOR;
 -keepattributes Signature
 
 -keep public class * implements com.bumptech.glide.module.GlideModule
+
+
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewInjector { *; }
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
+
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+# keep setters in Views so that animations can still work.
+# see http://proguard.sourceforge.net/manual/examples.html#beans
+-keepclassmembers public class * extends android.view.View {
+   void set*(***);
+   *** get*();
+}
+
+# We want to keep methods in Activity that could be used in the XML attribute onClick
+-keepclassmembers class * extends android.app.Activity {
+   public void *(android.view.View);
+}
+
+# For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keep class * implements android.os.Parcelable {
+  public static final android.os.Parcelable$Creator *;
+}
+
+-keepclassmembers class **.R$* {
+    public static <fields>;
+}
+
+-dontwarn android.support.**
+
+-keep class android.support.v4.** { *; }
+-keep interface android.support.v4.** { *; }
+-keep class android.support.v7.** { *; }
+-keep interface android.support.v7.internal.** { *; }
+-keep interface android.support.v7.** { *; }
+-keep interface android.support.design.** { *; }
+-keep class android.support.design.** { *; }
 
 

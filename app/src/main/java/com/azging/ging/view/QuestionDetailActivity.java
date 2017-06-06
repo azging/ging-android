@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,11 +38,17 @@ import com.azging.ging.net.WebUtils;
 import com.azging.ging.utils.AppManager;
 import com.azging.ging.utils.DensityUtils;
 import com.azging.ging.utils.GsonUtil;
+import com.azging.ging.utils.Log;
 import com.azging.ging.utils.ToastUtil;
 import com.azging.ging.utils.Utils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +108,7 @@ public class QuestionDetailActivity extends BaseMainActivity implements IActivit
         questionWrapper = GsonUtil.jsonToBean(getIntent().getStringExtra(KEY_QUESTION_DETAIL), QuestionWrapper.class);
 
         headerTitle.setText("求助详情");
-        headerMore.setVisibility(View.INVISIBLE);
+        headerMore.setImageResource(R.drawable.icon_share);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(Color.rgb(47, 223, 189));
@@ -179,7 +186,7 @@ public class QuestionDetailActivity extends BaseMainActivity implements IActivit
 //                });
     }
 
-    @OnClick({R.id.answer_question_btn, R.id.header_left, R.id.add_comment_button})
+    @OnClick({R.id.answer_question_btn, R.id.header_left, R.id.add_comment_button, R.id.header_right})
     void submit(View view) {
         switch (view.getId()) {
             case R.id.answer_question_btn://发布回答
@@ -194,9 +201,48 @@ public class QuestionDetailActivity extends BaseMainActivity implements IActivit
             case R.id.add_comment_button:
                 sendComment();
                 break;
+            case R.id.header_right:
+                UMImage umImage = new UMImage(this, questionWrapper.getQuestion().getShareUrl());
+                UMImage image= new UMImage(this,questionWrapper.getQuestion().getShareUrl());
+                umImage.setThumb(image);
+
+
+                new ShareAction(this)
+                        .withText("知应")
+                        .setDisplayList(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN_FAVORITE)
+                        .withMedia(umImage)
+                        .setCallback(mUMShareListener).open();
+                break;
         }
     }
 
+
+    private UMShareListener mUMShareListener = new UMShareListener() {
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+            //分享开始的回调
+        }
+
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Log.d("plat", "platform" + platform);
+            ToastUtil.showShort("分享成功");
+
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            ToastUtil.showShort("分享失败");
+            if (t != null) {
+                Log.d("throw", "throw:" + t.getMessage());
+            }
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            ToastUtil.showShort("取消分享");
+        }
+    };
 
     private void initHeader() {
         View header = LayoutInflater.from(this).inflate(R.layout.item_question_detail, null, false);
@@ -206,7 +252,7 @@ public class QuestionDetailActivity extends BaseMainActivity implements IActivit
 
         View breakLine = new View(this);
         breakLine.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DensityUtils.dp2px(this, 12)));
-        breakLine.setBackgroundColor(getResources().getColor(R.color.gray));
+        breakLine.setBackgroundColor(ContextCompat.getColor(this, R.color.ging_gray));
         adapter.addHeaderView(breakLine);
 
         TextView headerText = new TextView(this);
@@ -232,7 +278,7 @@ public class QuestionDetailActivity extends BaseMainActivity implements IActivit
         dividerDecoration.setDividerHeightDip(1);
         dividerDecoration.setPaddingLeft(10);
         dividerDecoration.setPaddingRight(10);
-        dividerDecoration.setDividerColor(getResources().getColor(R.color.gray));
+        dividerDecoration.setDividerColor(ContextCompat.getColor(this, R.color.ging_gray));
         mRecyclerView.addItemDecoration(dividerDecoration);
 
 
@@ -353,4 +399,16 @@ public class QuestionDetailActivity extends BaseMainActivity implements IActivit
         imm.showSoftInput(addCommentEdit, InputMethodManager.SHOW_FORCED);//弹出软键盘时，焦点定位在软键盘中
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        UMShareAPI.get(this).release();
+    }
 }

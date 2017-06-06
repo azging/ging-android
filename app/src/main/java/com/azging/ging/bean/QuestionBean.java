@@ -53,6 +53,7 @@ public class QuestionBean extends BaseBean {
     @SerializedName("ThumbPhotoUrls") private List<String> ThumbPhotoUrls;
     @SerializedName("AnswerNum") private int AnswerNum;
     @SerializedName("ExpireTimeStr") private String ExpireTimeStr;
+    @SerializedName("ShareUrl")private String ShareUrl;
 
     public String getQuid() {
         return Quid;
@@ -72,6 +73,14 @@ public class QuestionBean extends BaseBean {
 
     public String getDescription() {
         return Description;
+    }
+
+    public String getShareUrl() {
+        return ShareUrl;
+    }
+
+    public void setShareUrl(String shareUrl) {
+        ShareUrl = shareUrl;
     }
 
     public void setDescription(String Description) {

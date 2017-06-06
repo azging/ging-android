@@ -66,7 +66,7 @@ public class WxPay {
             sb.append('&');
         }
         sb.append("key=");
-        sb.append(Constants.API_KEY);
+//        sb.append(Constants.API_KEY);
 
 
         String packageSign = MD5Util.getMessageDigest(sb.toString().getBytes()).toUpperCase();

@@ -33,6 +33,7 @@ import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.cookie.store.PersistentCookieStore;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 
@@ -146,7 +147,7 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
 //		MobclickAgent.updateOnlineConfig(this);
 
         UMShareAPI.get(this);
-
+        Config.isJumptoAppStore = true;
 
 
         Log.i("", "onCreate: ");
@@ -169,7 +170,7 @@ public class BaseApp extends Application implements Application.ActivityLifecycl
 
 
     {
-        PlatformConfig.setWeixin("wx44d1d7ca25302f9d", "90a8a9d411282c10d502766360093f8f");
+        PlatformConfig.setWeixin("wx44d1d7ca25302f9d", "dd644317c7e714896b496196eab19435");
     }
 
 
